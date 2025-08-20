@@ -1,5 +1,5 @@
-import { DeckModel } from '../models/DeckModel';
 import { Component } from './Component';
+import { SlidesList } from './SlidesList';
 
 const css = `
   #textarea {
@@ -16,19 +16,19 @@ tpl.innerHTML = `
 `;
 
 type DeckEditorProps = {
-  deck: DeckModel;
+  slides: SlidesList;
   onChange: (value: string) => void;
 };
 
 export class DeckEditor extends Component {
   #textarea: HTMLTextAreaElement | null = null;
-  #deck: DeckModel;
+  #slides: SlidesList;
   #onChange: (value: string) => void;
 
-  constructor({ deck, onChange }: DeckEditorProps) {
+  constructor({ slides, onChange }: DeckEditorProps) {
     super();
-    this.#deck = deck;
-    this.#deck.addEventListener('change', this.update.bind(this));
+    this.#slides = slides;
+    this.#slides.addEventListener('change', this.update.bind(this));
     this.#onChange = onChange;
   }
 
@@ -44,7 +44,7 @@ export class DeckEditor extends Component {
   }
 
   update() {
-    this.#textarea!.value = this.#deck.rawData;
+    this.#textarea!.value = this.#slides.rawData;
   }
 
   private handleInput() {

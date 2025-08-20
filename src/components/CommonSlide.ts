@@ -1,20 +1,15 @@
-import type { CommonSlideModel } from '../models/CommonSlideModel';
+import { parse as parseMarkdown } from '../vendor/tiny-markdown-parser';
 import { Component } from './Component';
 
 type CommonSlideProps = {
-  slide: CommonSlideModel;
+  rawData: string;
   isEditable?: boolean;
-  addPrev: () => void;
-  addNext: () => void;
-  remove: () => void;
 };
 
 export class CommonSlide extends Component {
-  #slide: CommonSlideModel;
   #isEditable: boolean;
-  #addPrev: () => void;
-  #addNext: () => void;
-  #remove: () => void;
+  #heading!: string;
+  #content!: string;
   styles = `
     :host {
       width: var(--s-width, 1024px);
@@ -50,7 +45,7 @@ export class CommonSlide extends Component {
       justify-content: flex-end;
     }
 
-    #title {
+    #heading {
       color: var(--s-heading-color);
     }
 
@@ -63,19 +58,10 @@ export class CommonSlide extends Component {
     }
   `;
 
-  constructor({
-    slide,
-    isEditable = false,
-    addPrev,
-    addNext,
-    remove,
-  }: CommonSlideProps) {
+  constructor({ rawData, isEditable = false }: CommonSlideProps) {
     super();
-    this.#slide = slide;
+    this.rawData = rawData;
     this.#isEditable = isEditable;
-    this.#addPrev = addPrev;
-    this.#addNext = addNext;
-    this.#remove = remove;
   }
 
   override render() {
@@ -86,46 +72,79 @@ export class CommonSlide extends Component {
         <button id="next">Add Next</button>
         <button id="remove">Remove</button>
       </div>
-      <h1 id="title" contenteditable="${
+      <h1 id="heading" contenteditable="${
         this.#isEditable ? 'plaintext-only' : 'false'
-      }">${this.#slide.title}</h1>
+      }">${this.#heading}</h1>
       <section id="content" contenteditable="${
         this.#isEditable ? 'plaintext-only' : 'false'
-      }">${this.#slide.slideContent}</section>
+      }">${this.#slideContent}</section>
     `;
 
     const content = this.root.querySelector('#content');
-    const title = this.root.querySelector('#title');
+    const heading = this.root.querySelector('#heading');
     const remove = this.root.querySelector('#remove');
     const prev = this.root.querySelector('#prev');
     const next = this.root.querySelector('#next');
 
     if (this.#isEditable) {
-      title?.addEventListener('focusin', (e) => {
-        // title.innerHTML = this.#slide.title;
+      heading?.addEventListener('focusin', (e) => {
+        // heading.innerHTML = this.#heading;
       });
-      title?.addEventListener('focusout', (e) => {
-        this.#slide.title = title?.innerHTML || '';
+      heading?.addEventListener('focusout', (e) => {
+        this.heading = heading?.innerHTML || '';
       });
 
       content?.addEventListener('focusin', (e) => {
-        content.innerHTML = this.#slide.content;
+        content.innerHTML = this.content;
       });
       content?.addEventListener('focusout', (e) => {
-        this.#slide.content = content?.innerHTML || '';
-        content.innerHTML = this.#slide.slideContent;
+        this.content = content?.innerHTML || '';
+        content.innerHTML = this.#slideContent;
       });
     }
 
-    remove?.addEventListener('click', this.#remove);
-    prev?.addEventListener('click', this.#addPrev);
-    next?.addEventListener('click', this.#addNext);
+    remove?.addEventListener('click', () => this.#emit('remove'));
+    prev?.addEventListener('click', () => this.#emit('addPrev'));
+    next?.addEventListener('click', () => this.#emit('addNext'));
   }
 
-  isTheSameSlide(slide: CommonSlideModel) {
-    return (
-      this.#slide.title === slide.title && this.#slide.content === slide.content
-    );
+  set heading(value: string) {
+    this.#heading = value.trim();
+    this.#emit('change');
+  }
+
+  get heading() {
+    return this.#heading;
+  }
+
+  set content(value: string) {
+    this.#content = value.trim();
+    this.#emit('change');
+  }
+
+  get content() {
+    return this.#content;
+  }
+
+  set rawData(value: string) {
+    if (value.startsWith('# ')) {
+      this.#heading = value.split('\n')[0]?.slice(2) || '';
+      this.#content = value.split('\n').slice(1).join('\n') || '';
+    } else {
+      this.#content = value || '';
+    }
+  }
+
+  get rawData() {
+    return `# ${this.#heading}\n${this.#content}`;
+  }
+
+  get #slideContent() {
+    return parseMarkdown(this.#content);
+  }
+
+  #emit(event: string) {
+    this.dispatchEvent(new CustomEvent(event));
   }
 }
 

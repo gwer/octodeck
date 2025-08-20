@@ -1,32 +1,34 @@
 import { DeckEditor } from '../../../components/DeckEditor';
-import { Slides } from '../../../components/Slides';
+import { SlidesList } from '../../../components/SlidesList';
 import { Octostore } from '../../../lib/octostore';
-import { DeckModel } from '../../../models/DeckModel';
 
 const initialData = await Octostore.getData();
-const deck = new DeckModel(initialData || '');
-deck.addEventListener('change', () => {
-  Octostore.setData(deck.rawData);
-});
-
 const app = document.getElementById('app')!;
 
-// app.appendChild(
-//   new DeckEditor({
-//     deck,
-//     onChange: (value) => (deck.rawData = value),
-//   }),
-// );
+const slides = new SlidesList({
+  rawData: initialData || '',
+});
 
-app.appendChild(
-  new Slides({
-    deck,
-  }),
-);
+const isEditorEnabled = false;
+
+if (isEditorEnabled) {
+  const editor = new DeckEditor({
+    slides,
+    onChange: (value) => (slides.rawData = value),
+  });
+
+  app.appendChild(editor);
+}
+
+slides.addEventListener('change', () => {
+  Octostore.setData(slides.rawData);
+});
+
+app.appendChild(slides);
 
 window.addEventListener('hashchange', async () => {
   const data = await Octostore.getData();
   if (data) {
-    deck.rawData = data;
+    slides.rawData = data;
   }
 });
