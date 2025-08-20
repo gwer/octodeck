@@ -113,12 +113,19 @@ export class CommonSlide extends Component {
       });
       content?.addEventListener('focusout', (e) => {
         this.#slide.content = content?.innerHTML || '';
+        content.innerHTML = this.#slide.slideContent;
       });
     }
 
     remove?.addEventListener('click', this.#remove);
     prev?.addEventListener('click', this.#addPrev);
     next?.addEventListener('click', this.#addNext);
+  }
+
+  isTheSameSlide(slide: CommonSlideModel) {
+    return (
+      this.#slide.title === slide.title && this.#slide.content === slide.content
+    );
   }
 }
 
