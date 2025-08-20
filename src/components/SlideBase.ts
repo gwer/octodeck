@@ -1,5 +1,19 @@
+import { frontMatterToRawData, parseSlide } from '../lib/slides';
 import { parse as parseMarkdown } from '../vendor/tiny-markdown-parser';
 import { Component } from './Component';
+
+type SlideBaseCustomEvent = CustomEvent<{
+  type?: string;
+}>;
+
+declare global {
+  interface GlobalEventHandlersEventMap {
+    'slide-change': SlideBaseCustomEvent;
+    'slide-remove': SlideBaseCustomEvent;
+    'slide-add-prev': SlideBaseCustomEvent;
+    'slide-add-next': SlideBaseCustomEvent;
+  }
+}
 
 type SlideBaseProps = {
   rawData: string;
@@ -8,6 +22,8 @@ type SlideBaseProps = {
 
 export class SlideBase extends Component {
   protected _rawData!: string;
+  protected _frontMatter?: Record<string, string>;
+  protected _rawContent!: string;
   protected _isEditable!: boolean;
   protected _baseStyles = `
     :host {
@@ -57,6 +73,8 @@ export class SlideBase extends Component {
   controls = `
     <div class="controls">
       <button id="prev">Add Prev</button>
+      <button id="prevShout">Add Prev Shout</button>
+      <button id="nextShout">Add Next Shout</button>
       <button id="next">Add Next</button>
       <button id="remove">Remove</button>
     </div>
@@ -66,6 +84,14 @@ export class SlideBase extends Component {
     super();
     this._rawData = rawData;
     this._isEditable = isEditable;
+
+    const { frontMatter, rawContent } = parseSlide(rawData);
+    this._frontMatter = frontMatter;
+    this._rawContent = rawContent;
+  }
+
+  static getNewRawData() {
+    return 'New Slide';
   }
 
   override render() {
@@ -81,10 +107,10 @@ export class SlideBase extends Component {
 
     if (this._isEditable) {
       content?.addEventListener('focusin', (e) => {
-        content.innerHTML = this.rawData;
+        content.innerHTML = this.rawContent;
       });
       content?.addEventListener('focusout', (e) => {
-        this.rawData = content?.innerHTML || '';
+        this.rawContent = content?.innerHTML || '';
         content.innerHTML = this.#slideContent;
       });
     }
@@ -103,27 +129,50 @@ export class SlideBase extends Component {
     const remove = this.root.querySelector('#remove');
     const prev = this.root.querySelector('#prev');
     const next = this.root.querySelector('#next');
+    const prevShout = this.root.querySelector('#prevShout');
+    const nextShout = this.root.querySelector('#nextShout');
 
-    remove?.addEventListener('click', () => this._emit('remove'));
-    prev?.addEventListener('click', () => this._emit('addPrev'));
-    next?.addEventListener('click', () => this._emit('addNext'));
+    remove?.addEventListener('click', () => this._emit('slide-remove'));
+    prev?.addEventListener('click', () =>
+      this._emit('slide-add-prev', { type: 'common' }),
+    );
+    next?.addEventListener('click', () =>
+      this._emit('slide-add-next', { type: 'common' }),
+    );
+    prevShout?.addEventListener('click', () =>
+      this._emit('slide-add-prev', { type: 'shout' }),
+    );
+    nextShout?.addEventListener('click', () =>
+      this._emit('slide-add-next', { type: 'shout' }),
+    );
   }
 
   set rawData(value: string) {
-    this._rawData = value;
-    this._emit('change');
+    const { frontMatter, rawContent } = parseSlide(value);
+    this._frontMatter = frontMatter;
+    this._rawContent = rawContent;
   }
 
   get rawData() {
-    return this._rawData;
+    return `${frontMatterToRawData(this._frontMatter)}
+${this._rawContent}`;
+  }
+
+  get rawContent() {
+    return this._rawContent;
+  }
+
+  set rawContent(value: string) {
+    this._rawContent = value;
+    this._emit('slide-change');
   }
 
   get #slideContent() {
-    return parseMarkdown(this._rawData);
+    return parseMarkdown(this._rawContent);
   }
 
-  protected _emit(event: string) {
-    this.dispatchEvent(new CustomEvent(event));
+  protected _emit(event: string, detail?: any) {
+    this.dispatchEvent(new CustomEvent(event, { detail }));
   }
 }
 

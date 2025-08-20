@@ -20,6 +20,10 @@ export class SlideCommon extends SlideBase {
     this.rawData = rawData;
   }
 
+  static override getNewRawData() {
+    return '# Heading\nContent';
+  }
+
   override render() {
     this.root.innerHTML = `
       ${this.css}
@@ -54,7 +58,7 @@ export class SlideCommon extends SlideBase {
 
   set heading(value: string) {
     this.#heading = value.trim();
-    this._emit('change');
+    this._emit('slide-change');
   }
 
   get heading() {
@@ -63,7 +67,7 @@ export class SlideCommon extends SlideBase {
 
   set content(value: string) {
     this.#content = value.trim();
-    this._emit('change');
+    this._emit('slide-change');
   }
 
   get content() {
