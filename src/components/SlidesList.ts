@@ -1,5 +1,5 @@
 import { Component } from './Component';
-import { CommonSlide } from './CommonSlide';
+import { SlideCommon } from './SlideCommon';
 
 const css = `
   .slides {
@@ -55,7 +55,7 @@ export class SlidesList extends Component {
   }
 
   createSlide(rawData: string) {
-    const slide = new CommonSlide({
+    const slide = new SlideCommon({
       rawData: rawData,
       isEditable: this.#isEditable,
     });
@@ -73,8 +73,8 @@ export class SlidesList extends Component {
   }
 
   addSlideBefore(e: Event, rawData?: string) {
-    const target = e.target as CommonSlide;
-    const newSlide = new CommonSlide({
+    const target = e.target as SlideCommon;
+    const newSlide = new SlideCommon({
       rawData: rawData || this.#newSlide,
       isEditable: this.#isEditable,
     });
@@ -85,8 +85,8 @@ export class SlidesList extends Component {
   }
 
   addSlideAfter(e: Event, rawData?: string) {
-    const target = e.target as CommonSlide;
-    const newSlide = new CommonSlide({
+    const target = e.target as SlideCommon;
+    const newSlide = new SlideCommon({
       rawData: rawData || this.#newSlide,
       isEditable: this.#isEditable,
     });
@@ -97,7 +97,7 @@ export class SlidesList extends Component {
   }
 
   removeSlide(e: Event) {
-    const target = e.target as CommonSlide;
+    const target = e.target as SlideCommon;
     target.parentElement?.removeChild(target);
 
     this.#updateRawDataFromSlides();
@@ -105,7 +105,7 @@ export class SlidesList extends Component {
 
   get slides() {
     return Array.from(
-      this.root.querySelectorAll('common-slide') as NodeListOf<CommonSlide>,
+      this.root.querySelectorAll('slide-common') as NodeListOf<SlideCommon>,
     );
   }
 
