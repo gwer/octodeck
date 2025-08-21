@@ -33,7 +33,7 @@ export class SlideBase extends Component {
       font-size: var(--s-font-size, 25px);
       line-height: var(--s-line-height, 2);
       padding: 2em;
-      background-color: var(--s-background-color, #fff);
+      background-color: var(--s-bg-color, #fff);
       border: 1px solid #ccc;
       border-radius: 2px;
       box-sizing: border-box;

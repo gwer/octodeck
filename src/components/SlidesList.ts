@@ -7,6 +7,7 @@ import { Component } from './Component';
 import { SlideBase } from './SlideBase';
 import { SlideCommon } from './SlideCommon';
 import { SlideShout } from './SlideShout';
+import type { Styles } from './StyleEditor';
 
 const css = `
   #slides {
@@ -35,6 +36,12 @@ export class SlidesList extends Component {
   #slidesSeparator: string = '\n+++\n+++\n';
   #globalFrontMatterSeparator: string = '===';
   #DefaultSlide = SlideShout;
+  #defaultStyles: Styles = {
+    bgColor: '#ffffff',
+    headingColor: '#554444',
+    fontColor: '#000000',
+    fontSize: '25',
+  };
 
   constructor({ rawData }: SlidesListProps) {
     super();
@@ -67,6 +74,35 @@ export class SlidesList extends Component {
     return this.#rawSlides;
   }
 
+  set styles(value: Styles) {
+    this.#frontMatter = {
+      ...this.#frontMatter,
+      ...value,
+    };
+
+    this.render();
+    this.#emit('change');
+  }
+
+  set stylesInput(value: Styles) {
+    this.#frontMatter = {
+      ...this.#frontMatter,
+      ...value,
+    };
+
+    this.render();
+  }
+
+  get styles() {
+    return {
+      bgColor: this.#frontMatter.bgColor || this.#defaultStyles.bgColor,
+      headingColor:
+        this.#frontMatter.headingColor || this.#defaultStyles.headingColor,
+      fontColor: this.#frontMatter.fontColor || this.#defaultStyles.fontColor,
+      fontSize: this.#frontMatter.fontSize || this.#defaultStyles.fontSize,
+    };
+  }
+
   #parseRawData(value: string) {
     if (value.startsWith('===')) {
       const splitted = value.split('===\n');
@@ -82,8 +118,20 @@ export class SlidesList extends Component {
     return { frontMatter: {}, rawSlides: value.trim() };
   }
 
+  get #cssVariables() {
+    return `
+      #slides {
+        --s-bg-color: ${this.styles.bgColor};
+        --s-heading-color: ${this.styles.headingColor};
+        --s-font-color: ${this.styles.fontColor};
+        --s-font-size: ${this.styles.fontSize}px;
+      }
+    `;
+  }
+
   override render() {
     this.root.innerHTML = `
+      <style id="css-variables">${this.#cssVariables}</style>
       <style>${css}</style>
       <div id="slides"></div>
     `;
