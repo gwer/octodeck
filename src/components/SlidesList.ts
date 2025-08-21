@@ -1,4 +1,8 @@
-import { parseSlide } from '../lib/slides';
+import {
+  frontMatterParse,
+  frontMatterToRawData,
+  parseSlide,
+} from '../lib/slides';
 import { Component } from './Component';
 import { SlideBase } from './SlideBase';
 import { SlideCommon } from './SlideCommon';
@@ -24,27 +28,58 @@ const slidesTypesMap = {
   shout: SlideShout,
 };
 
-const DefaultSlide = SlideShout;
-
 export class SlidesList extends Component {
   #isEditable: boolean = true;
-  #rawData!: string;
+  #rawSlides!: string;
+  #frontMatter!: Record<string, string>;
   #slidesSeparator: string = '\n+++\n+++\n';
+  #globalFrontMatterSeparator: string = '===';
+  #DefaultSlide = SlideShout;
 
   constructor({ rawData }: SlidesListProps) {
     super();
-    this.rawData = rawData || DefaultSlide.getNewRawData();
+    this.rawData = rawData || this.#DefaultSlide.getNewRawData();
   }
 
   set rawData(value: string) {
-    this.#rawData = value;
+    const { frontMatter, rawSlides } = this.#parseRawData(value);
+    this.#frontMatter = frontMatter;
+    this.#rawSlides = rawSlides;
 
     this.render();
     this.#emit('change');
   }
 
   get rawData() {
-    return this.#rawData;
+    return `${frontMatterToRawData(
+      this.#frontMatter,
+      this.#globalFrontMatterSeparator,
+    )}\n${this.#rawSlides}`;
+  }
+
+  set rawSlides(value: string) {
+    this.#rawSlides = value;
+    this.render();
+    this.#emit('change');
+  }
+
+  get rawSlides() {
+    return this.#rawSlides;
+  }
+
+  #parseRawData(value: string) {
+    if (value.startsWith('===')) {
+      const splitted = value.split('===\n');
+
+      if (splitted.length > 2) {
+        const frontMatter = frontMatterParse(splitted[1]);
+        const rawSlides = splitted.slice(2).join('===\n').trim();
+
+        return { frontMatter, rawSlides };
+      }
+    }
+
+    return { frontMatter: {}, rawSlides: value.trim() };
   }
 
   override render() {
@@ -54,7 +89,7 @@ export class SlidesList extends Component {
     `;
 
     const slidesEl = this.root.getElementById('slides')!;
-    const slides = this.#rawData
+    const slides = this.#rawSlides
       .split(this.#slidesSeparator)
       .map((slide) => this.createSlide(slide));
 
@@ -130,12 +165,12 @@ export class SlidesList extends Component {
   }
 
   #updateRawDataFromSlides() {
-    this.#rawData = this.slides
+    this.#rawSlides = this.slides
       .map((slide) => slide.rawData)
       .join(this.#slidesSeparator);
 
     if (this.slides.length === 0) {
-      this.rawData = DefaultSlide.getNewRawData();
+      this.rawSlides = this.#DefaultSlide.getNewRawData();
     }
 
     this.#emit('change');

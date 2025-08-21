@@ -10,17 +10,12 @@ export const parseSlide = (rawData: string) => {
         rawContent: splitted.slice(2).join('---').trim(),
       };
     }
-
-    return {
-      frontMatter: {},
-      rawContent: rawData.trim(),
-    };
   }
 
   return { frontMatter: {}, rawContent: rawData.trim() };
 };
 
-const frontMatterParse = (rawData?: string) => {
+export const frontMatterParse = (rawData?: string): Record<string, string> => {
   if (!rawData) {
     return {};
   }
@@ -42,14 +37,15 @@ const frontMatterParse = (rawData?: string) => {
 
 export const frontMatterToRawData = (
   frontMatter?: Record<string, string>,
+  separator: string = '---',
 ): string => {
   if (!frontMatter || Object.keys(frontMatter).length === 0) {
-    return '---\n---';
+    return `${separator}\n${separator}`;
   }
 
-  return `---
+  return `${separator}
 ${Object.entries(frontMatter)
   .map(([key, value]) => `${key}: ${value}`)
   .join('\n')}
----`;
+${separator}`;
 };

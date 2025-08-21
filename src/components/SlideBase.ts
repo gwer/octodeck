@@ -22,7 +22,7 @@ type SlideBaseProps = {
 
 export class SlideBase extends Component {
   protected _rawData!: string;
-  protected _frontMatter?: Record<string, string>;
+  protected _frontMatter!: Record<string, string>;
   protected _rawContent!: string;
   protected _isEditable!: boolean;
   protected _baseStyles = `
@@ -41,6 +41,10 @@ export class SlideBase extends Component {
       overflow: hidden;
       transform: scale(var(--s-scale, 1));
       transform-origin: 0 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--s-heading-color);
     }
 
     [contenteditable] {
