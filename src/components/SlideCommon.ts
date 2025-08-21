@@ -17,11 +17,11 @@ export class SlideCommon extends SlideBase {
 
   constructor({ rawData, isEditable = false }: SlideCommonProps) {
     super({ rawData, isEditable });
-    this.rawData = rawData;
+    this.rawContent = this._rawContent;
   }
 
   static override getNewRawData() {
-    return '# Heading\nContent';
+    return '---\ntype: common\n---\n# Heading\nContent';
   }
 
   override render() {
@@ -74,7 +74,7 @@ export class SlideCommon extends SlideBase {
     return this.#content;
   }
 
-  override set rawData(value: string) {
+  override set rawContent(value: string) {
     if (value.startsWith('# ')) {
       this.#heading = value.split('\n')[0]?.slice(2) || '';
       this.#content = value.split('\n').slice(1).join('\n') || '';
@@ -83,7 +83,7 @@ export class SlideCommon extends SlideBase {
     }
   }
 
-  override get rawData() {
+  override get rawContent() {
     return `# ${this.#heading}\n${this.#content}`;
   }
 

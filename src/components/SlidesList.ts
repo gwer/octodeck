@@ -24,7 +24,7 @@ const slidesTypesMap = {
   shout: SlideShout,
 };
 
-const DefaultSlide = SlideCommon;
+const DefaultSlide = SlideShout;
 
 export class SlidesList extends Component {
   #isEditable: boolean = true;
@@ -78,13 +78,14 @@ export class SlidesList extends Component {
     return slide;
   }
 
+  getSlideClassByType(type?: string): typeof SlideBase {
+    return slidesTypesMap[type as keyof typeof slidesTypesMap] || SlideBase;
+  }
+
   getSlideClass(rawData: string): typeof SlideBase {
     const { frontMatter } = parseSlide(rawData);
 
-    return (
-      slidesTypesMap[frontMatter.type as keyof typeof slidesTypesMap] ||
-      DefaultSlide
-    );
+    return this.getSlideClassByType(frontMatter.type);
   }
 
   updateSlide(e: Event) {
@@ -92,14 +93,9 @@ export class SlidesList extends Component {
   }
 
   createNewSlideFromEvent(e: CustomEvent) {
-    const SlideClass =
-      slidesTypesMap[e.detail.type as keyof typeof slidesTypesMap] ||
-      DefaultSlide;
+    const SlideClass = this.getSlideClassByType(e.detail.type);
 
-    return new SlideClass({
-      rawData: SlideClass.getNewRawData(),
-      isEditable: this.#isEditable,
-    });
+    return this.createSlide(SlideClass.getNewRawData());
   }
 
   addSlideBefore(e: CustomEvent) {
@@ -140,7 +136,6 @@ export class SlidesList extends Component {
 
     if (this.slides.length === 0) {
       this.rawData = DefaultSlide.getNewRawData();
-      this.render();
     }
 
     this.#emit('change');

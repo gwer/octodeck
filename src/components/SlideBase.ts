@@ -38,6 +38,7 @@ export class SlideBase extends Component {
       border-radius: 2px;
       box-sizing: border-box;
       box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
       transform: scale(var(--s-scale, 1));
       transform-origin: 0 0;
     }
@@ -49,6 +50,10 @@ export class SlideBase extends Component {
 
     p, ol, ul {
       margin-top: 0;
+    }
+
+    hr {
+      width: 100%;
     }
 
     .controls {
@@ -154,8 +159,7 @@ export class SlideBase extends Component {
   }
 
   get rawData() {
-    return `${frontMatterToRawData(this._frontMatter)}
-${this._rawContent}`;
+    return `${frontMatterToRawData(this._frontMatter)}\n${this.rawContent}`;
   }
 
   get rawContent() {

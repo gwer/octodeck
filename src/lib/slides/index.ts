@@ -1,14 +1,12 @@
-import { parse as parseYaml } from '../../vendor/yeahml';
-
 export const parseSlide = (rawData: string) => {
   if (rawData.trim().startsWith('---')) {
     const splitted = rawData.split('---');
 
     if (splitted.length > 2) {
-      const frontMatter = parseYaml(splitted[1]);
+      const frontMatter = frontMatterParse(splitted[1]);
 
       return {
-        frontMatter,
+        frontMatter: frontMatter || {},
         rawContent: splitted.slice(2).join('---').trim(),
       };
     }
@@ -22,16 +20,36 @@ export const parseSlide = (rawData: string) => {
   return { frontMatter: {}, rawContent: rawData.trim() };
 };
 
+const frontMatterParse = (rawData?: string) => {
+  if (!rawData) {
+    return {};
+  }
+
+  const frontMatter: Record<string, string> = {};
+
+  rawData.split('\n').forEach((line) => {
+    const [key, value] = line.split(':');
+
+    if (!key || !value) {
+      return;
+    }
+
+    frontMatter[key.trim()] = value.trim();
+  });
+
+  return frontMatter;
+};
+
 export const frontMatterToRawData = (
   frontMatter?: Record<string, string>,
 ): string => {
-  if (!frontMatter) {
-    return '';
+  if (!frontMatter || Object.keys(frontMatter).length === 0) {
+    return '---\n---';
   }
 
   return `---
-    ${Object.entries(frontMatter)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join('\n')}
-    ---`;
+${Object.entries(frontMatter)
+  .map(([key, value]) => `${key}: ${value}`)
+  .join('\n')}
+---`;
 };

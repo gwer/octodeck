@@ -28,7 +28,7 @@ app.appendChild(slides);
 
 window.addEventListener('hashchange', async () => {
   const data = await Octostore.getData();
-  if (data) {
+  if (data && data !== slides.rawData) {
     slides.rawData = data;
   }
 });

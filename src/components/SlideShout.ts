@@ -1,4 +1,3 @@
-import { parse as parseMarkdown } from '../vendor/tiny-markdown-parser';
 import { SlideBase } from './SlideBase';
 
 type SlideShoutProps = {
@@ -26,10 +25,10 @@ export class SlideShout extends SlideBase {
 
   static override getNewRawData() {
     return `
-      ---
-      type: shout
-      ---
-      New Slide
+---
+type: shout
+---
+New Slide
     `;
   }
 }
