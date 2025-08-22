@@ -12,6 +12,7 @@ declare global {
     'slide-remove': SlideBaseCustomEvent;
     'slide-add-prev': SlideBaseCustomEvent;
     'slide-add-next': SlideBaseCustomEvent;
+    'slide-clone': SlideBaseCustomEvent;
   }
 }
 
@@ -86,6 +87,7 @@ export class SlideBase extends Component {
       <button id="nextShout">Add Next Shout</button>
       <button id="next">Add Next</button>
       <button id="remove">Remove</button>
+      <button id="clone">Clone</button>
     </div>
   `;
 
@@ -135,13 +137,13 @@ export class SlideBase extends Component {
   }
 
   protected _initControls() {
-    const remove = this.root.querySelector('#remove');
     const prev = this.root.querySelector('#prev');
     const next = this.root.querySelector('#next');
     const prevShout = this.root.querySelector('#prevShout');
     const nextShout = this.root.querySelector('#nextShout');
+    const remove = this.root.querySelector('#remove');
+    const clone = this.root.querySelector('#clone');
 
-    remove?.addEventListener('click', () => this._emit('slide-remove'));
     prev?.addEventListener('click', () =>
       this._emit('slide-add-prev', { type: 'common' }),
     );
@@ -154,6 +156,8 @@ export class SlideBase extends Component {
     nextShout?.addEventListener('click', () =>
       this._emit('slide-add-next', { type: 'shout' }),
     );
+    remove?.addEventListener('click', () => this._emit('slide-remove'));
+    clone?.addEventListener('click', () => this._emit('slide-clone'));
   }
 
   set rawData(value: string) {

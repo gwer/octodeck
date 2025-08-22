@@ -157,6 +157,7 @@ export class SlidesList extends Component {
     slide.addEventListener('slide-add-prev', this.addSlideBefore.bind(this));
     slide.addEventListener('slide-add-next', this.addSlideAfter.bind(this));
     slide.addEventListener('slide-remove', this.removeSlide.bind(this));
+    slide.addEventListener('slide-clone', this.cloneSlide.bind(this));
 
     return slide;
   }
@@ -199,9 +200,18 @@ export class SlidesList extends Component {
     this.#updateRawDataFromSlides();
   }
 
-  removeSlide(e: Event) {
+  removeSlide(e: CustomEvent) {
     const target = e.target as SlideBase;
     target.parentElement?.removeChild(target);
+
+    this.#updateRawDataFromSlides();
+  }
+
+  cloneSlide(e: CustomEvent) {
+    const target = e.target as SlideBase;
+    const newSlide = this.createSlide(target.rawData);
+
+    target.parentElement?.insertBefore(newSlide, target);
 
     this.#updateRawDataFromSlides();
   }
