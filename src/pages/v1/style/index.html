@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OctoDeck</title>
+    <style>
+      body {
+        --s-width: 1024px;
+        --s-height: calc(var(--s-width) / (16 / 9));
+        --s-scale: 1;
+        --s-line-height: 2;
+
+        margin: 0;
+        padding: 0;
+        background-color: #654;
+        font-family: system-ui;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="./deck.ts"></script>
+  </body>
+</html>

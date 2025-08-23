@@ -22,6 +22,7 @@ const css = `
 
 type SlidesListProps = {
   rawData: string;
+  isEditable?: boolean;
 };
 
 const slidesTypesMap = {
@@ -30,7 +31,7 @@ const slidesTypesMap = {
 };
 
 export class SlidesList extends Component {
-  #isEditable: boolean = true;
+  #isEditable: boolean = false;
   #rawSlides!: string;
   #frontMatter!: Record<string, string>;
   #slidesSeparator: string = '\n+++\n+++\n';
@@ -43,9 +44,10 @@ export class SlidesList extends Component {
     fontSize: '25',
   };
 
-  constructor({ rawData }: SlidesListProps) {
+  constructor({ rawData, isEditable = false }: SlidesListProps) {
     super();
     this.rawData = rawData || this.#DefaultSlide.getNewRawData();
+    this.#isEditable = isEditable;
   }
 
   set rawData(value: string) {

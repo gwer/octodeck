@@ -1,29 +1,31 @@
-import { DeckEditor } from '../../../components/DeckEditor';
 import { OctodeckModes } from '../../../components/OctodeckModes';
 import { SlidesList } from '../../../components/SlidesList';
+import { StyleEditor } from '../../../components/StyleEditor';
 import { Octostore } from '../../../lib/octostore';
 
 const initialData = await Octostore.getData();
 const app = document.getElementById('app')!;
 
-const modes = new OctodeckModes({ currentMode: 'edit' });
+const modes = new OctodeckModes({ currentMode: 'style' });
 app.appendChild(modes);
 
 const slides = new SlidesList({
   rawData: initialData || '',
-  isEditable: true,
 });
 
-const isEditorEnabled = false;
+const styleEditor = new StyleEditor({
+  styles: slides.styles,
+});
 
-if (isEditorEnabled) {
-  const editor = new DeckEditor({
-    slides,
-    onChange: (value) => (slides.rawData = value),
-  });
+styleEditor.addEventListener('styles-input', () => {
+  slides.stylesInput = styleEditor.styles;
+});
 
-  app.appendChild(editor);
-}
+styleEditor.addEventListener('styles-change', () => {
+  slides.styles = styleEditor.styles;
+});
+
+app.appendChild(styleEditor);
 
 slides.addEventListener('change', () => {
   Octostore.setData(slides.rawData);
@@ -36,5 +38,9 @@ window.addEventListener('hashchange', async () => {
 
   if (data && data !== slides.rawData) {
     slides.rawData = data;
+  }
+
+  if (styleEditor.styles !== slides.styles) {
+    styleEditor.styles = slides.styles;
   }
 });

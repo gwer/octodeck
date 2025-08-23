@@ -70,11 +70,15 @@ export class SlideBase extends Component {
       justify-content: flex-end;
     }
 
+    :host([editable="false"]) .controls {
+      display: none;
+    }
+
     #content {
       color: var(--s-font-color);
     }
 
-    #content:not(:focus) {
+    :host([editable="true"]) #content:not(:focus) {
       cursor: pointer;
     }
   `;
@@ -95,6 +99,7 @@ export class SlideBase extends Component {
     super();
     this._rawData = rawData;
     this._isEditable = isEditable;
+    this.setAttribute('editable', isEditable ? 'true' : 'false');
 
     const { frontMatter, rawContent } = parseSlide(rawData);
     this._frontMatter = frontMatter;
