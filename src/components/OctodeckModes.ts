@@ -44,6 +44,10 @@ export class OctodeckModes extends Component {
           cursor: pointer;
         }
 
+        button:hover {
+          background-color: #ddd;
+        }
+
         button.active {
           background-color: #333;
           color: #fff;

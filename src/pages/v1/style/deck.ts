@@ -38,9 +38,6 @@ window.addEventListener('hashchange', async () => {
 
   if (data && data !== slides.rawData) {
     slides.rawData = data;
-  }
-
-  if (styleEditor.styles !== slides.styles) {
     styleEditor.styles = slides.styles;
   }
 });
