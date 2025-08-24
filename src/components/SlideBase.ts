@@ -86,12 +86,12 @@ export class SlideBase extends Component {
 
   controls = `
     <div class="controls">
-      <button id="prev">Add Prev</button>
-      <button id="prevShout">Add Prev Shout</button>
-      <button id="nextShout">Add Next Shout</button>
-      <button id="next">Add Next</button>
-      <button id="remove">Remove</button>
-      <button id="clone">Clone</button>
+      <octodeck-button id="prev">Add Prev</octodeck-button>
+      <octodeck-button id="prevShout">Add Prev Shout</octodeck-button>
+      <octodeck-button id="nextShout">Add Next Shout</octodeck-button>
+      <octodeck-button id="next">Add Next</octodeck-button>
+      <octodeck-button id="remove">Remove</octodeck-button>
+      <octodeck-button id="clone">Clone</octodeck-button>
     </div>
   `;
 

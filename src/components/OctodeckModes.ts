@@ -1,4 +1,5 @@
 import { Component } from './Component';
+import './Button';
 
 type OctodeckMode = 'edit' | 'style' | 'order' | 'view';
 
@@ -33,46 +34,21 @@ export class OctodeckModes extends Component {
           flex-direction: column;
           gap: 1em;
         }
-
-        button {
-          padding: 0.5em 1em;
-          border-radius: 4px;
-          box-sizing: border-box;
-          background-color: #eee;
-          height: 2.5em;
-          color: #000;
-          border: 1px solid #999;
-          cursor: pointer;
-        }
-
-        button:hover {
-          background-color: #ddd;
-        }
-
-        button:active {
-          background-color: #ccc;
-        }
-
-        button.active {
-          background-color: #333;
-          border: none;
-          color: #fff;
-        }
       </style>
 
       <div id="octodeck-modes">
-        <button id="edit" class="${
+        <octodeck-button id="edit" ${
           this.#currentMode === 'edit' ? 'active' : ''
-        }">Edit</button>
-        <button id="style" class="${
+        }>Edit</octodeck-button>
+        <octodeck-button id="style" ${
           this.#currentMode === 'style' ? 'active' : ''
-        }">Style</button>
-        <button id="order" class="${
+        }>Style</octodeck-button>
+        <octodeck-button id="order" ${
           this.#currentMode === 'order' ? 'active' : ''
-        }">Order</button>
-        <button id="view" class="${
+        }>Order</octodeck-button>
+        <octodeck-button id="view" ${
           this.#currentMode === 'view' ? 'active' : ''
-        }">View</button>
+        }>View</octodeck-button>
       </div>
     `;
 
