@@ -37,8 +37,9 @@ export class OctodeckModes extends Component {
         button {
           padding: 0.5em 1em;
           border-radius: 4px;
-          border: none;
+          box-sizing: border-box;
           background-color: #eee;
+          height: 2.5em;
           color: #000;
           border: 1px solid #999;
           cursor: pointer;
@@ -48,23 +49,28 @@ export class OctodeckModes extends Component {
           background-color: #ddd;
         }
 
+        button:active {
+          background-color: #ccc;
+        }
+
         button.active {
           background-color: #333;
+          border: none;
           color: #fff;
         }
       </style>
 
       <div id="octodeck-modes">
-        <button octodeck-button id="edit" class="${
+        <button id="edit" class="${
           this.#currentMode === 'edit' ? 'active' : ''
         }">Edit</button>
-        <button octodeck-button id="style" class="${
+        <button id="style" class="${
           this.#currentMode === 'style' ? 'active' : ''
         }">Style</button>
-        <button octodeck-button id="order" class="${
+        <button id="order" class="${
           this.#currentMode === 'order' ? 'active' : ''
         }">Order</button>
-        <button octodeck-button id="view" class="${
+        <button id="view" class="${
           this.#currentMode === 'view' ? 'active' : ''
         }">View</button>
       </div>
