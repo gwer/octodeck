@@ -13,12 +13,15 @@ declare global {
     'slide-add-prev': SlideBaseCustomEvent;
     'slide-add-next': SlideBaseCustomEvent;
     'slide-clone': SlideBaseCustomEvent;
+    'slide-cut': SlideBaseCustomEvent;
+    'slide-paste': SlideBaseCustomEvent;
   }
 }
 
 type SlideBaseProps = {
   rawData: string;
   isEditable?: boolean;
+  isClipboardHasItems?: boolean;
 };
 
 export class SlideBase extends Component {
@@ -26,6 +29,7 @@ export class SlideBase extends Component {
   protected _frontMatter!: Record<string, string>;
   protected _rawContent!: string;
   protected _isEditable!: boolean;
+  protected _isClipboardHasItems!: boolean;
   protected _baseStyles = `
     :host {
       width: var(--s-width, 1024px);
@@ -81,26 +85,67 @@ export class SlideBase extends Component {
     :host([editable="true"]) #content:not(:focus) {
       cursor: pointer;
     }
+
+
+    select {
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #eee;
+      height: 2.5em;
+      color: #000;
+      border: 1px solid #999;
+      cursor: pointer;
+    }
+
+    select:hover {
+      background-color: #ddd;
+    }
+
+    select:active {
+      background-color: #ccc;
+    }
+
+    option {
+      background-color: #fff;
+    }
   `;
   protected _styles = ``;
 
   controls = `
     <div class="controls">
-      <octodeck-button id="prev">Add Prev</octodeck-button>
-      <octodeck-button id="prevShout">Add Prev Shout</octodeck-button>
-      <octodeck-button id="nextShout">Add Next Shout</octodeck-button>
-      <octodeck-button id="next">Add Next</octodeck-button>
-      <octodeck-button id="remove">Remove</octodeck-button>
       <octodeck-button id="clone">Clone</octodeck-button>
+      <octodeck-button id="cut">Cut</octodeck-button>
+      <octodeck-button id="remove">Remove</octodeck-button>
+      <select id="addBefore">
+        <option value="" style="color: #666; font-weight: bold;">Add Before</option>
+        <option value="common">New Common</option>
+        <option value="shout">New Shout</option>
+        <option value="paste" data-paste-option ${
+          this.isClipboardHasItems ? '' : 'disabled'
+        }>Paste</option>
+      </select>
+      <select id="addAfter">
+        <option value="" style="color: #666; font-weight: bold;">Add After</option>
+        <option value="common">New Common</option>
+        <option value="shout">New Shout</option>
+        <option value="paste" data-paste-option ${
+          this.isClipboardHasItems ? '' : 'disabled'
+        }>Paste</option>
+      </select>
     </div>
   `;
 
-  constructor({ rawData, isEditable = false }: SlideBaseProps) {
+  constructor({
+    rawData,
+    isEditable = false,
+    isClipboardHasItems = false,
+  }: SlideBaseProps) {
     super();
     this._rawData = rawData;
     this._isEditable = isEditable;
     this.setAttribute('editable', isEditable ? 'true' : 'false');
-
+    this._isClipboardHasItems = isClipboardHasItems;
     const { frontMatter, rawContent } = parseSlide(rawData);
     this._frontMatter = frontMatter;
     this._rawContent = rawContent;
@@ -142,27 +187,54 @@ export class SlideBase extends Component {
   }
 
   protected _initControls() {
-    const prev = this.root.querySelector('#prev');
-    const next = this.root.querySelector('#next');
-    const prevShout = this.root.querySelector('#prevShout');
-    const nextShout = this.root.querySelector('#nextShout');
-    const remove = this.root.querySelector('#remove');
     const clone = this.root.querySelector('#clone');
+    const cut = this.root.querySelector('#cut');
+    const remove = this.root.querySelector('#remove');
+    const addBefore = this.root.querySelector('#addBefore');
+    const addAfter = this.root.querySelector('#addAfter');
 
-    prev?.addEventListener('click', () =>
-      this._emit('slide-add-prev', { type: 'common' }),
-    );
-    next?.addEventListener('click', () =>
-      this._emit('slide-add-next', { type: 'common' }),
-    );
-    prevShout?.addEventListener('click', () =>
-      this._emit('slide-add-prev', { type: 'shout' }),
-    );
-    nextShout?.addEventListener('click', () =>
-      this._emit('slide-add-next', { type: 'shout' }),
-    );
-    remove?.addEventListener('click', () => this._emit('slide-remove'));
     clone?.addEventListener('click', () => this._emit('slide-clone'));
+    cut?.addEventListener('click', () => this._emit('slide-cut'));
+    remove?.addEventListener('click', () => this._emit('slide-remove'));
+    addBefore?.addEventListener('change', (e) => {
+      const target = e.target as HTMLSelectElement;
+      const value = target.value;
+
+      if (['common', 'shout'].includes(value)) {
+        this._emit('slide-add-prev', { type: value });
+      } else if (value === 'paste') {
+        this._emit('slide-paste', { type: 'prev' });
+      }
+
+      target.value = '';
+    });
+    addAfter?.addEventListener('change', (e) => {
+      const target = e.target as HTMLSelectElement;
+      const value = target.value;
+
+      if (['common', 'shout'].includes(value)) {
+        this._emit('slide-add-next', { type: value });
+      } else if (value === 'paste') {
+        this._emit('slide-paste', { type: 'next' });
+      }
+
+      target.value = '';
+    });
+  }
+
+  set isClipboardHasItems(value: boolean) {
+    this._isClipboardHasItems = value;
+    const pasteOptions = this.root.querySelectorAll(
+      'option[data-paste-option]',
+    ) as NodeListOf<HTMLOptionElement>;
+
+    pasteOptions.forEach((option) => {
+      option.disabled = !value;
+    });
+  }
+
+  get isClipboardHasItems() {
+    return this._isClipboardHasItems;
   }
 
   set rawData(value: string) {

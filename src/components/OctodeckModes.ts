@@ -1,7 +1,7 @@
 import { Component } from './Component';
 import './Button';
 
-type OctodeckMode = 'edit' | 'style' | 'order' | 'view';
+type OctodeckMode = 'edit' | 'style' | 'view';
 
 type OctodeckModesProps = {
   currentMode: OctodeckMode;
@@ -43,9 +43,6 @@ export class OctodeckModes extends Component {
         <octodeck-button id="style" ${
           this.#currentMode === 'style' ? 'active' : ''
         }>Style</octodeck-button>
-        <octodeck-button id="order" ${
-          this.#currentMode === 'order' ? 'active' : ''
-        }>Order</octodeck-button>
         <octodeck-button id="view" ${
           this.#currentMode === 'view' ? 'active' : ''
         }>View</octodeck-button>
@@ -54,7 +51,6 @@ export class OctodeckModes extends Component {
 
     const edit = this.root.getElementById('edit')!;
     const style = this.root.getElementById('style')!;
-    const order = this.root.getElementById('order')!;
     const view = this.root.getElementById('view')!;
 
     edit.addEventListener('click', () => {
@@ -63,10 +59,6 @@ export class OctodeckModes extends Component {
 
     style.addEventListener('click', () => {
       window.location.replace(`/v1/style${window.location.hash}`);
-    });
-
-    order.addEventListener('click', () => {
-      window.location.replace(`/v1/order${window.location.hash}`);
     });
 
     view.addEventListener('click', () => {

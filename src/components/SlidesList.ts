@@ -31,6 +31,7 @@ const slidesTypesMap = {
 };
 
 export class SlidesList extends Component {
+  #clipboard: string[] = [];
   #isEditable: boolean = false;
   #rawSlides!: string;
   #frontMatter!: Record<string, string>;
@@ -160,6 +161,8 @@ export class SlidesList extends Component {
     slide.addEventListener('slide-add-next', this.addSlideAfter.bind(this));
     slide.addEventListener('slide-remove', this.removeSlide.bind(this));
     slide.addEventListener('slide-clone', this.cloneSlide.bind(this));
+    slide.addEventListener('slide-cut', this.cutSlide.bind(this));
+    slide.addEventListener('slide-paste', this.pasteSlide.bind(this));
 
     return slide;
   }
@@ -209,6 +212,13 @@ export class SlidesList extends Component {
     this.#updateRawDataFromSlides();
   }
 
+  cutSlide(e: CustomEvent) {
+    const target = e.target as SlideBase;
+    this.#clipboard.push(target.rawData);
+    this.removeSlide(e);
+    this.#updateSlidesClipboardStatus();
+  }
+
   cloneSlide(e: CustomEvent) {
     const target = e.target as SlideBase;
     const newSlide = this.createSlide(target.rawData);
@@ -218,10 +228,34 @@ export class SlidesList extends Component {
     this.#updateRawDataFromSlides();
   }
 
+  pasteSlide(e: CustomEvent) {
+    if (this.#clipboard.length === 0) {
+      return;
+    }
+
+    const target = e.target as SlideBase;
+    const type = e.detail.type;
+    const newSlide = this.createSlide(this.#clipboard.pop()!);
+
+    target.parentElement?.insertBefore(
+      newSlide,
+      type === 'prev' ? target : target.nextSibling,
+    );
+
+    this.#updateRawDataFromSlides();
+    this.#updateSlidesClipboardStatus();
+  }
+
   get slides() {
     return Array.from(this.root.getElementById('slides')!.children).filter(
       (child) => child instanceof SlideBase,
     ) as SlideBase[];
+  }
+
+  #updateSlidesClipboardStatus() {
+    this.slides.forEach((slide) => {
+      slide.isClipboardHasItems = this.#clipboard.length > 0;
+    });
   }
 
   #updateRawDataFromSlides() {
