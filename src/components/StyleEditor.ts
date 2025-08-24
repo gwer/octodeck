@@ -38,7 +38,7 @@ export class StyleEditor extends Component {
     this.root.innerHTML = `
       <style>
         #style-editor {
-          display: inline-flex;
+          display: flex;
           gap: 2em;
           flex-wrap: wrap;
           background-color: #fff;
@@ -47,6 +47,12 @@ export class StyleEditor extends Component {
           border-radius: 4px;
           box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.3);
           align-items: center;
+          justify-content: space-around;
+          position: sticky;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 2;
         }
 
         label {
