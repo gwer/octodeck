@@ -3,9 +3,366 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OctoDeck</title>
+    <title>OctoDeck - Presentations in URLs</title>
+    <meta
+      name="description"
+      content="Create and share presentations instantly with magic links. No files, no servers, just pure URL magic with markdown support."
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header {
+        padding: 1rem 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #667eea;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 120px 0 80px;
+        text-align: center;
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .hero .subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 32px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .btn-primary {
+        background: white;
+        color: #667eea;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      .btn-secondary:hover {
+        background: white;
+        color: #667eea;
+      }
+
+      /* Features Section */
+      .features {
+        padding: 80px 0;
+        background: white;
+      }
+
+      .features h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: #333;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+        margin-top: 3rem;
+      }
+
+      .feature {
+        text-align: center;
+        padding: 2rem;
+        border-radius: 12px;
+        background: #f8f9ff;
+        transition: transform 0.3s;
+      }
+
+      .feature:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      .feature p {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      /* CTA Section */
+      .cta {
+        padding: 80px 0;
+        background: #667eea;
+        color: white;
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .cta p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      /* Footer */
+      footer {
+        padding: 40px 0;
+        background: #333;
+        color: white;
+        text-align: center;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .demo-content {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
   </head>
   <body>
-    Hello!
+    <header>
+      <nav class="container">
+        <div class="logo">🐙 OctoDeck</div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="/v1/edit">Create</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container">
+          <h1>Presentations<br />in URLs</h1>
+          <p class="subtitle">
+            Create and share presentations instantly with magic links. No files,
+            no servers, just pure URL magic with markdown support.
+          </p>
+          <div class="cta-buttons">
+            <a href="/v1/edit" class="btn btn-primary">Start Creating</a>
+            <a
+              href="/v1/view#hY/RbtowFIbv/RT/2hsIMktbtRdIuaCEbZkoQcA2VVUlnORALIyNbEfZpohnn0JQ17teWPb5/k/n+ERRxLLdxChjR7jebrf3FLKSRCH1Gw1vw/Dhhm2N9m8oDB/u7s5oJf/SCLf3LIoixjln/s+RRnClqfy5vkaaexNTvmeDweB8/mu5ORyMvniPwskcW2MPwnupd+x75TxqKz3BKVmQQy19iSB4EnZfmFoHwYhxBMGjUUUQoIdNEGzQb1nihZJ5xzp0qnRBVklNp5aeLvTkvJV7gi+tqXblqQsv6ctM6r177X3ut/RFiYzUay8m56UWXhrdb70P9ppJ5x27GeLZVMiFRuUIqoXdPlmlFHVGaguyVFzSjHZSd46uDhlZx8CRlqhN3b4Sj9rYvWMAx8qbI6RnaIuFIuHofUexE1J/+uira5EpcqzhWJfSgTccl0uAN6yBk4ejIjTwrYkG9Ft05KPWE1MQ22w2LImn83XyJZmM10k6R5z8TFZJOh+yxTL9uhw/8SQe4hspZXhtrCrOwWQa/1hO38kAECerxWz8jKuzjV+tfTUE0M75Bw=="
+              class="btn btn-secondary"
+              >Demo</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="features">
+        <div class="container">
+          <h2>Why OctoDeck?</h2>
+          <div class="features-grid">
+            <div class="feature">
+              <div class="feature-icon">🔗</div>
+              <h3>Magic Links</h3>
+              <p>
+                Your entire presentation is encoded directly in the URL. Share
+                the link, share the presentation. No downloads, no sign-ups, no
+                hassle.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">⚡</div>
+              <h3>Instant Loading</h3>
+              <p>
+                Opens immediately, works offline after first visit. No server
+                delays, no loading spinners, just instant access to your
+                content.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">📝</div>
+              <h3>Markdown Powered</h3>
+              <p>
+                Write slides in familiar markdown syntax. Format text, add
+                images, create lists - all with simple, readable markup.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🎨</div>
+              <h3>Live Editing</h3>
+              <p>
+                Edit slides in real-time with instant preview. Switch between
+                edit, style, and view modes seamlessly.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">📱</div>
+              <h3>Responsive Design</h3>
+              <p>
+                Works perfectly on any device. Present from your laptop, phone,
+                or tablet - your slides adapt automatically.
+              </p>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🔒</div>
+              <h3>Privacy First</h3>
+              <p>
+                No data stored on servers. Your presentations live only in the
+                URLs you create and share. Complete privacy by design.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container">
+          <h2>Ready to Create?</h2>
+          <p>
+            Start building your first presentation right now. No registration
+            required.
+          </p>
+          <a href="/v1/edit" class="btn btn-primary">Create Your First Deck</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; OctoDeck. Presentations reimagined.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+        });
+      });
+
+      // Add scroll effect to header
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 100) {
+          header.style.background = 'rgba(255, 255, 255, 0.98)';
+        } else {
+          header.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
+      });
+    </script>
   </body>
 </html>
