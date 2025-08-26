@@ -87,7 +87,7 @@ export class SlideBase extends Component {
       top: 1em;
       right: 1em;
       display: flex;
-      gap: 1em;
+      gap: 0.5em;
       justify-content: flex-end;
     }
 
