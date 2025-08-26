@@ -32,7 +32,7 @@ export class SlideCommon extends SlideBase {
         this._isEditable ? 'plaintext-only' : 'false'
       }">${this.#heading}</h1>
       <section id="content" contenteditable="${
-        this._isEditable ? 'plaintext-only' : 'false'
+        this._isEditable ? 'true' : 'false'
       }">${this.#slideContent}</section>
     `;
 
@@ -46,10 +46,12 @@ export class SlideCommon extends SlideBase {
 
       content?.addEventListener('focusin', (e) => {
         content.innerHTML = this.content;
+        content.setAttribute('contenteditable', 'plaintext-only');
       });
       content?.addEventListener('focusout', (e) => {
         this.content = content?.innerHTML || '';
         content.innerHTML = this.#slideContent;
+        content.setAttribute('contenteditable', 'true');
       });
     }
 

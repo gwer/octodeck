@@ -57,7 +57,16 @@ export class SlideBase extends Component {
       padding: 0 1rem;
     }
 
-    p, ol, ul {
+    ol, ul {
+      margin-top: 0;
+    }
+
+    p {
+      margin-bottom: 0;
+      margin-top: calc(var(--s-line-height) * 1em);
+    }
+
+    p:first-child {
       margin-top: 0;
     }
 
@@ -160,7 +169,7 @@ export class SlideBase extends Component {
       ${this.css}
       ${this.controls}
       <section id="content" contenteditable="${
-        this._isEditable ? 'plaintext-only' : 'false'
+        this._isEditable ? 'true' : 'false'
       }">${this.#slideContent}</section>
     `;
 
@@ -169,10 +178,12 @@ export class SlideBase extends Component {
     if (this._isEditable) {
       content?.addEventListener('focusin', (e) => {
         content.innerHTML = this.rawContent;
+        content.setAttribute('contenteditable', 'plaintext-only');
       });
       content?.addEventListener('focusout', (e) => {
         this.rawContent = content?.innerHTML || '';
         content.innerHTML = this.#slideContent;
+        content.setAttribute('contenteditable', 'true');
       });
     }
 
