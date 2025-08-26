@@ -73,6 +73,15 @@ export class SlideBase extends Component {
       width: 100%;
     }
 
+    table {
+      border-collapse: collapse;
+    }
+
+    td, th {
+      border: 1px solid var(--s-font-color);
+      padding: 0.5em;
+    }
+
     .controls {
       position: absolute;
       top: 1em;
