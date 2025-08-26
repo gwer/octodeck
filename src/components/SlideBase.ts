@@ -63,7 +63,6 @@ export class SlideBase extends Component {
 
     p {
       margin-bottom: 0;
-      margin-top: calc(var(--s-line-height) * 1em);
     }
 
     p:first-child {
