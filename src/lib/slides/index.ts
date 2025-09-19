@@ -1,3 +1,6 @@
+import { computed, type Signal } from '@preact/signals';
+
+// ?????
 export const parseSlide = (rawData: string) => {
   if (rawData.trim().startsWith('---')) {
     const splitted = rawData.split('---');
@@ -13,6 +16,56 @@ export const parseSlide = (rawData: string) => {
   }
 
   return { frontMatter: {}, rawContent: rawData.trim() };
+};
+
+export const getComputedFrontMatterRaw = (rawDataSignal: Signal<string>) => {
+  return computed(() => {
+    const rawData = rawDataSignal.value;
+
+    if (rawData.trim().startsWith('---')) {
+      const splitted = rawData.split('---');
+
+      if (splitted.length > 2) {
+        return splitted[1] || '';
+      }
+    }
+
+    return '';
+  });
+};
+
+export const getComputedFrontMatter = (rawDataSignal: Signal<string>) => {
+  return computed(() => {
+    const rawData = rawDataSignal.value;
+
+    if (rawData.trim().startsWith('---')) {
+      const splitted = rawData.split('---');
+
+      if (splitted.length > 2) {
+        const frontMatter = frontMatterParse(splitted[1]);
+
+        return frontMatter || {};
+      }
+    }
+
+    return {};
+  });
+};
+
+export const getComputedRawContent = (rawDataSignal: Signal<string>) => {
+  return computed(() => {
+    const rawData = rawDataSignal.value;
+
+    if (rawData.trim().startsWith('---')) {
+      const splitted = rawData.split('---');
+
+      if (splitted.length > 2) {
+        return splitted.slice(2).join('---').trim();
+      }
+    }
+
+    return rawData.trim();
+  });
 };
 
 export const frontMatterParse = (rawData?: string): Record<string, string> => {

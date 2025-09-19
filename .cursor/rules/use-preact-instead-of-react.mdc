@@ -1,0 +1,23 @@
+---
+description: Use preact instead of react.
+globs: '*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json'
+alwaysApply: false
+---
+
+Default to using Preact instead of React.
+
+- Import hooks and types from `preact` instead of `react`.
+
+Prefer this way:
+
+```
+import { type FunctionComponent } from 'preact';
+
+type MyComponentProps = {
+  myProp: string;
+};
+
+export const MyComponent: FunctionComponent<MyComponentProps> = ({ myProp }) => {
+  return <div>{myProp}</div>;
+};
+```
