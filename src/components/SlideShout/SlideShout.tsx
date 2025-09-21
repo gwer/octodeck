@@ -5,13 +5,11 @@ import { SlideBase } from '../SlideBase/SlideBase';
 type SlideShoutProps = {
   slide: SlideShoutModel;
   isEditable?: boolean;
-  // onChange: (id: string, value: string) => void;
 };
 
 export const SlideShout: FunctionComponent<SlideShoutProps> = ({
   slide,
   isEditable = false,
-  // onChange,
 }) => {
   return (
     // ToDo: add shout styles

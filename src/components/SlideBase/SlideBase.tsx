@@ -5,13 +5,11 @@ import type { SlideBaseModel } from '../../models/SlideBaseModel';
 type SlideBaseProps = {
   slide: SlideBaseModel;
   isEditable?: boolean;
-  // onChange: (id: string, value: string) => void;
 };
 
 export const SlideBase: FunctionComponent<SlideBaseProps> = ({
   slide,
   isEditable = false,
-  // onChange,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -34,7 +32,6 @@ export const SlideBase: FunctionComponent<SlideBaseProps> = ({
         }
 
         slide.content = ref.current.innerHTML;
-        // onChange(slide.id, ref.current.innerHTML);
         ref.current.innerHTML = slide.slideContent;
         ref.current.setAttribute('contenteditable', 'true');
       }}

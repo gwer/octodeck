@@ -20,7 +20,7 @@ type SlidesListModelProps = {
   // onChange: (value: string) => void;
 };
 
-type SlideType = 'common' | 'shout';
+export type SlideType = 'common' | 'shout';
 
 const slidesTypesMap: Record<SlideType, typeof SlideBaseModel> = {
   common: SlideCommonModel,
@@ -155,9 +155,13 @@ export class SlidesListModel {
     return this.createSlide(SlideClass.getNewRawData());
   }
 
+  getSlideIndex(target: SlideBaseModel) {
+    return this.#slides.value.indexOf(target);
+  }
+
   addSlideBefore(target: SlideBaseModel, type: SlideType) {
     const newSlide = this.createNewSlideByType(type);
-    const index = this.#slides.value.indexOf(target);
+    const index = this.getSlideIndex(target);
 
     this.#slides.value = [
       ...this.#slides.value.slice(0, index),
@@ -168,7 +172,7 @@ export class SlidesListModel {
 
   addSlideAfter(target: SlideBaseModel, type: SlideType) {
     const newSlide = this.createNewSlideByType(type);
-    const index = this.#slides.value.indexOf(target);
+    const index = this.getSlideIndex(target);
 
     this.#slides.value = [
       ...this.#slides.value.slice(0, index + 1),
@@ -188,7 +192,7 @@ export class SlidesListModel {
 
   cloneSlide(target: SlideBaseModel) {
     const newSlide = this.createSlide(target.rawData);
-    const index = this.#slides.value.indexOf(target);
+    const index = this.getSlideIndex(target);
 
     this.#slides.value = [
       ...this.#slides.value.slice(0, index + 1),
@@ -204,7 +208,7 @@ export class SlidesListModel {
       return;
     }
 
-    const index = this.#slides.value.indexOf(target);
+    const index = this.getSlideIndex(target);
 
     this.#slides.value = [
       ...this.#slides.value.slice(0, index),
@@ -220,7 +224,7 @@ export class SlidesListModel {
       return;
     }
 
-    const index = this.#slides.value.indexOf(target);
+    const index = this.getSlideIndex(target);
 
     this.#slides.value = [
       ...this.#slides.value.slice(0, index + 1),

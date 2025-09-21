@@ -5,13 +5,11 @@ import type { SlideCommonModel } from '../../models/SlideCommonModel';
 type SlideCommonProps = {
   slide: SlideCommonModel;
   isEditable?: boolean;
-  // onChange: (id: string, value: string) => void;
 };
 
 export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
   slide,
   isEditable = false,
-  // onChange,
 }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -27,7 +25,6 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
           }
 
           slide.heading = headingRef.current.innerHTML;
-          // onChange(slide.id, slide.rawData);
         }}
       >
         {slide.heading}
@@ -50,7 +47,6 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
           }
 
           slide.content = contentRef.current.innerHTML;
-          // onChange(slide.id, slide.rawData);
           contentRef.current.innerHTML = slide.slideContent;
           contentRef.current.setAttribute('contenteditable', 'true');
         }}
