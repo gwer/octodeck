@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'preact';
-import type { SlidesListModel, SlideType } from '../models/SlidesListModel';
-import { Slide } from './Slide';
+import type { SlidesListModel, SlideType } from '../../models/SlidesListModel';
+import { Slide } from '../Slide';
+import './SlidesList.css';
 
 export type SlidesListProps = {
   slidesList: SlidesListModel;
@@ -14,7 +15,7 @@ export const SlidesList: FunctionComponent<SlidesListProps> = ({
   const slides = slidesList.slides;
 
   return (
-    <div>
+    <div class="slidesList">
       {slides.value.map((slide) => {
         return (
           <Slide

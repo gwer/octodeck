@@ -11,8 +11,5 @@ export const SlideShout: FunctionComponent<SlideShoutProps> = ({
   slide,
   isEditable = false,
 }) => {
-  return (
-    // ToDo: add shout styles
-    <SlideBase slide={slide} isEditable={isEditable} />
-  );
+  return <SlideBase slide={slide} isEditable={isEditable} isShout />;
 };

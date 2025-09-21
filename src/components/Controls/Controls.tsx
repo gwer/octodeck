@@ -1,5 +1,6 @@
 import type { JSX } from 'preact/jsx-runtime';
 import type { SlideType } from '../../models/SlidesListModel';
+import './Controls.css';
 
 export type ControlsProps = {
   cloneSlide: () => void;

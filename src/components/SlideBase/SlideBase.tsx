@@ -5,17 +5,20 @@ import type { SlideBaseModel } from '../../models/SlideBaseModel';
 type SlideBaseProps = {
   slide: SlideBaseModel;
   isEditable?: boolean;
+  isShout?: boolean;
 };
 
 export const SlideBase: FunctionComponent<SlideBaseProps> = ({
   slide,
   isEditable = false,
+  isShout = false,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
     <div
       ref={ref}
+      class={`slideContent ${isShout ? 'slideContent_shout' : ''}`}
       dangerouslySetInnerHTML={{ __html: slide.slideContent }}
       contentEditable={isEditable ? 'true' : 'false'}
       onFocusIn={() => {

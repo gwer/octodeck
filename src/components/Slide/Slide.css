@@ -14,88 +14,63 @@
   transform: scale(var(--s-scale, 1));
   transform-origin: 0 0;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: var(--s-heading-color);
-  }
-
-  [contenteditable] {
+  & [contenteditable] {
     margin: 0 -1rem;
     padding: 0 1rem;
   }
+}
 
-  ol,
-  ul {
+.slideContent {
+  color: var(--s-font-color);
+
+  &[contenteditable='true']:not(:focus) {
+    cursor: pointer;
+  }
+
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    color: var(--s-heading-color);
+  }
+
+  & ol,
+  & ul {
     margin-top: 0;
   }
 
-  p {
+  & p {
     margin-bottom: 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
-  p:first-child {
-    margin-top: 0;
-  }
-
-  hr {
+  & hr {
     width: 100%;
   }
 
-  table {
+  & table {
     border-collapse: collapse;
   }
 
-  td,
-  th {
+  & td,
+  & th {
     border: 1px solid var(--s-font-color);
     padding: 0.5em;
   }
+}
 
-  .controls {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-    display: flex;
-    gap: 0.5em;
-    justify-content: flex-end;
-  }
-
-  [editable='false'] .controls {
-    display: none;
-  }
-
-  .content {
-    color: var(--s-font-color);
-  }
-
-  [editable='true'] .content:not(:focus) {
-    cursor: pointer;
-  }
-
-  select {
-    padding: 0.5em 1em;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: #eee;
-    height: 2.5em;
-    color: #000;
-    border: 1px solid #999;
-    cursor: pointer;
-  }
-
-  select:hover {
-    background-color: #ddd;
-  }
-
-  select:active {
-    background-color: #ccc;
-  }
-
-  option {
-    background-color: #fff;
-  }
+.slideContent_shout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--s-heading-color);
+  font-size: 3em;
+  font-weight: bold;
 }

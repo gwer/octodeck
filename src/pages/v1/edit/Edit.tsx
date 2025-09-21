@@ -6,11 +6,10 @@ import { SlidesListModel } from '../../../models/SlidesListModel';
 import { DeckEditor } from '../../../components/DeckEditor/DeckEditor';
 import { effect } from '@preact/signals';
 
-const isEditorEnabled = true;
+const isEditorEnabled = false;
 const initialData = await Octostore.getData();
 const slidesList = new SlidesListModel({
   rawData: initialData || '',
-  // onChange: (value) => Octostore.setData(value),
 });
 
 effect(() => {
@@ -21,34 +20,14 @@ const app = document.getElementById('app')!;
 
 render(
   <div>
-    {isEditorEnabled && (
-      <DeckEditor
-        slides={slidesList}
-        // onChange={(value) => Octostore.setData(value)}
-      />
-    )}
-    <SlidesList
-      slidesList={slidesList}
-      // onChange={(value) => Octostore.setData(value)}
-      isEditable={isEditorEnabled}
-    />
+    {isEditorEnabled && <DeckEditor slides={slidesList} />}
+    <SlidesList slidesList={slidesList} isEditable={true} />
   </div>,
   app,
 );
 
 // const modes = new OctodeckModes({ currentMode: 'edit' });
 // app.appendChild(modes);
-
-//
-
-// if (isEditorEnabled) {
-//   const editor = new DeckEditor({
-//     slides,
-//     onChange: (value) => (slides.rawData = value),
-//   });
-
-//   app.appendChild(editor);
-// }
 
 window.addEventListener('hashchange', async () => {
   const data = await Octostore.getData();

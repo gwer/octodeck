@@ -18,6 +18,7 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
     <>
       <h1
         ref={headingRef}
+        class="slide_heading"
         contenteditable={isEditable ? 'plaintext-only' : 'false'}
         onFocusOut={() => {
           if (!headingRef.current) {
@@ -31,6 +32,7 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
       </h1>
       <section
         ref={contentRef}
+        class="slideContent"
         dangerouslySetInnerHTML={{ __html: slide.slideContent }}
         contentEditable={isEditable ? 'true' : 'false'}
         onFocusIn={() => {

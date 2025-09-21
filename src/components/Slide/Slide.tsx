@@ -3,7 +3,7 @@ import type { SlideType } from '../../models/SlidesListModel';
 import { SlideBaseModel } from '../../models/SlideBaseModel';
 import { SlideCommonModel } from '../../models/SlideCommonModel';
 import { SlideShoutModel } from '../../models/SlideShoutModel';
-import { Controls } from '../Controls/Controls';
+import { Controls } from '../Controls';
 import { SlideBase } from '../SlideBase';
 import { SlideCommon } from '../SlideCommon';
 import { SlideShout } from '../SlideShout';
@@ -54,15 +54,17 @@ export const Slide: FunctionComponent<SlideProps> = ({
 }) => {
   return (
     <div className="slide">
-      <Controls
-        cloneSlide={cloneSlide}
-        cutSlide={cutSlide}
-        removeSlide={removeSlide}
-        addSlideBefore={addSlideBefore}
-        addSlideAfter={addSlideAfter}
-        pasteSlideBefore={pasteSlideBefore}
-        pasteSlideAfter={pasteSlideAfter}
-      />
+      {isEditable ? (
+        <Controls
+          cloneSlide={cloneSlide}
+          cutSlide={cutSlide}
+          removeSlide={removeSlide}
+          addSlideBefore={addSlideBefore}
+          addSlideAfter={addSlideAfter}
+          pasteSlideBefore={pasteSlideBefore}
+          pasteSlideAfter={pasteSlideAfter}
+        />
+      ) : null}
       {getSlideContent({
         slide,
         isEditable,

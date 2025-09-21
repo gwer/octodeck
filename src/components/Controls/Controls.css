@@ -1,0 +1,31 @@
+.controls {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  display: flex;
+  gap: 0.5em;
+  justify-content: flex-end;
+}
+
+& select {
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #eee;
+  height: 2.5em;
+  color: #000;
+  border: 1px solid #999;
+  cursor: pointer;
+}
+
+& select:hover {
+  background-color: #ddd;
+}
+
+& select:active {
+  background-color: #ccc;
+}
+
+& option {
+  background-color: #fff;
+}
