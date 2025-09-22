@@ -13,7 +13,17 @@ const slidesList = new SlidesListModel({
 });
 
 effect(() => {
-  Octostore.setData(slidesList.rawData);
+  // Reading the rawData field for correct subscription on the signal
+  // Refactor this with caution
+  slidesList.rawData;
+
+  const updateIfChanged = async () => {
+    if ((await Octostore.getData()) !== slidesList.rawData) {
+      Octostore.setData(slidesList.rawData);
+    }
+  };
+
+  updateIfChanged();
 });
 
 const app = document.getElementById('app')!;
