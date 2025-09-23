@@ -12,20 +12,6 @@ const slidesList = new SlidesListModel({
   rawData: initialData || '',
 });
 
-effect(() => {
-  // Reading the rawData field for correct subscription on the signal
-  // Refactor this with caution
-  slidesList.rawData;
-
-  const updateIfChanged = async () => {
-    if ((await Octostore.getData()) !== slidesList.rawData) {
-      Octostore.setData(slidesList.rawData);
-    }
-  };
-
-  updateIfChanged();
-});
-
 const app = document.getElementById('app')!;
 
 render(
@@ -39,10 +25,37 @@ render(
 // const modes = new OctodeckModes({ currentMode: 'edit' });
 // app.appendChild(modes);
 
+/**
+ * Syncronization between the model and the store
+ */
+
+let isSyncInProgress = false;
+
+effect(() => {
+  const updateIfChanged = async (data: string) => {
+    // Skip cyclic update between the model and the store
+    if (isSyncInProgress) {
+      return;
+    }
+
+    if ((await Octostore.getData()) === data) {
+      return;
+    }
+
+    Octostore.setData(data);
+  };
+
+  // It's important to read the signal in the synchronous part of the effect
+  // for correct subscription on the signal
+  updateIfChanged(slidesList.rawData);
+});
+
 window.addEventListener('hashchange', async () => {
   const data = await Octostore.getData();
 
   if (data && data !== slidesList.rawData) {
+    isSyncInProgress = true;
     slidesList.rawData = data;
+    isSyncInProgress = false;
   }
 });
