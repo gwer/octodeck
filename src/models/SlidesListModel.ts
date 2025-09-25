@@ -8,7 +8,7 @@ import { SlideBaseModel } from './SlideBaseModel';
 import { SlideCommonModel } from './SlideCommonModel';
 import { SlideShoutModel } from './SlideShoutModel';
 
-type Styles = {
+export type Styles = {
   bgColor: string;
   headingColor: string;
   fontColor: string;
@@ -17,7 +17,6 @@ type Styles = {
 
 type SlidesListModelProps = {
   rawData: string;
-  // onChange: (value: string) => void;
 };
 
 export type SlideType = 'common' | 'shout';
@@ -40,11 +39,12 @@ export class SlidesListModel {
     fontColor: '#000000',
     fontSize: '25',
   };
-  // #onChange: (value: string) => void;
+  #stylesView!: Signal<Styles>;
 
   constructor({ rawData }: SlidesListModelProps) {
-    // this.#onChange = onChange;
+    this.#stylesView = signal(this.#defaultStyles);
     this.rawData = rawData || this.#DefaultSlide.getNewRawData();
+    this.#stylesView.value = this.styles;
   }
 
   set rawData(value: string) {
@@ -54,8 +54,7 @@ export class SlidesListModel {
     this.#slides.value = rawSlides
       .split(this.#slidesSeparator)
       .map((slide) => this.createSlide(slide));
-
-    // this.#onChange(this.rawData);
+    this.#stylesView.value = this.styles;
   }
 
   get rawData() {
@@ -71,13 +70,21 @@ export class SlidesListModel {
       .join(this.#slidesSeparator);
   }
 
+  set stylesView(value: Styles) {
+    this.#stylesView.value = value;
+  }
+
+  get stylesView() {
+    return this.#stylesView.value;
+  }
+
   set styles(value: Styles) {
     this.#frontMatter.value = {
       ...this.#frontMatter.value,
       ...value,
     };
 
-    // this.#onChange(this.rawData);
+    this.#stylesView.value = value;
   }
 
   get styles() {
@@ -108,22 +115,10 @@ export class SlidesListModel {
     return { frontMatter: {}, rawSlides: value.trim() };
   }
 
-  // get #cssVariables() {
-  //   return `
-  //     #slides {
-  //       --s-bg-color: ${this.styles.bgColor};
-  //       --s-heading-color: ${this.styles.headingColor};
-  //       --s-font-color: ${this.styles.fontColor};
-  //       --s-font-size: ${this.styles.fontSize}px;
-  //     }
-  //   `;
-  // }
-
   createSlide(rawData: string) {
     const SlideClass = this.getSlideClass(rawData);
     const slide = new SlideClass({
       rawData: signal(rawData),
-      // onChange: () => this.#onChange(this.rawData),
     });
 
     return slide;
@@ -140,14 +135,6 @@ export class SlidesListModel {
 
     return this.getSlideClassByType(frontMatter.type);
   }
-
-  // updateSlide(id: string, value: string) {
-  //   const slide = this.#slides.value.find((slide) => slide.id === id);
-
-  //   if (slide) {
-  //     slide.rawData = value;
-  //   }
-  // }
 
   createNewSlideByType(type: SlideType) {
     const SlideClass = this.getSlideClassByType(type);
@@ -253,21 +240,5 @@ export class SlidesListModel {
   //   this.slides.forEach((slide) => {
   //     slide.isClipboardHasItems = this.#clipboard.length > 0;
   //   });
-  // }
-
-  // #updateRawDataFromSlides() {
-  //   this.#rawSlides = this.slides
-  //     .map((slide) => slide.rawData)
-  //     .join(this.#slidesSeparator);
-
-  //   if (this.slides.length === 0) {
-  //     this.rawSlides = this.#DefaultSlide.getNewRawData();
-  //   }
-
-  //   this.#emit('change');
-  // }
-
-  // #emit(event: string) {
-  //   this.dispatchEvent(new CustomEvent(event));
   // }
 }

@@ -1,9 +1,11 @@
 // import { OctodeckModes } from '../../../components/OctodeckModes';
 import { render } from 'preact';
-import { SlidesList } from '../../../components/SlidesList';
 import { Octostore } from '../../../lib/octostore';
 import { SlidesListModel } from '../../../models/SlidesListModel';
 import { DeckEditor } from '../../../components/DeckEditor/DeckEditor';
+import { SlidesList } from '../../../components/SlidesList';
+import { StyleEditor } from '../../../components/StyleEditor';
+import { Styles } from '../../../components/Styles';
 import { effect } from '@preact/signals';
 
 const isEditorEnabled = false;
@@ -15,10 +17,12 @@ const slidesList = new SlidesListModel({
 const app = document.getElementById('app')!;
 
 render(
-  <div>
+  <>
+    <Styles slidesList={slidesList} />
+    <StyleEditor slidesList={slidesList} />
     {isEditorEnabled && <DeckEditor slides={slidesList} />}
     <SlidesList slidesList={slidesList} isEditable={true} />
-  </div>,
+  </>,
   app,
 );
 

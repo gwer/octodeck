@@ -20,12 +20,8 @@
   }
 }
 
-.slideContent {
+.slide {
   color: var(--s-font-color);
-
-  &[contenteditable='true']:not(:focus) {
-    cursor: pointer;
-  }
 
   & h1,
   & h2,
@@ -61,6 +57,12 @@
   & th {
     border: 1px solid var(--s-font-color);
     padding: 0.5em;
+  }
+}
+
+.slideContent {
+  &[contenteditable='true']:not(:focus) {
+    cursor: pointer;
   }
 }
 
