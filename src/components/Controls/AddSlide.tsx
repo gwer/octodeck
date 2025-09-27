@@ -5,9 +5,15 @@ type AddSlideProps = {
   name: string;
   addSlide: (type: SlideType) => void;
   pasteSlide: () => void;
+  isClipboardHasItems: boolean;
 };
 
-export const AddSlide = ({ name, addSlide, pasteSlide }: AddSlideProps) => {
+export const AddSlide = ({
+  name,
+  addSlide,
+  pasteSlide,
+  isClipboardHasItems,
+}: AddSlideProps) => {
   const handleAddSlide = (e: JSX.TargetedEvent<HTMLSelectElement>) => {
     const target = e.target as HTMLSelectElement;
 
@@ -35,7 +41,7 @@ export const AddSlide = ({ name, addSlide, pasteSlide }: AddSlideProps) => {
       </option>
       <option value="common">New Common</option>
       <option value="shout">New Shout</option>
-      <option value="paste" data-paste-option>
+      <option value="paste" disabled={!isClipboardHasItems}>
         Paste
       </option>
     </select>

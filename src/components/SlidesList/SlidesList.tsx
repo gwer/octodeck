@@ -21,6 +21,7 @@ export const SlidesList: FunctionComponent<SlidesListProps> = ({
           <Slide
             key={slide.id}
             slide={slide}
+            isClipboardHasItems={slidesList.clipboardLength > 0}
             isEditable={isEditable}
             cloneSlide={() => slidesList.cloneSlide(slide)}
             cutSlide={() => slidesList.cutSlide(slide)}

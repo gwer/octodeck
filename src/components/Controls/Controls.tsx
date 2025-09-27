@@ -10,6 +10,7 @@ export type ControlsProps = {
   addSlideAfter: (type: SlideType) => void;
   pasteSlideBefore: () => void;
   pasteSlideAfter: () => void;
+  isClipboardHasItems: boolean;
 };
 export const Controls = ({
   cloneSlide,
@@ -19,6 +20,7 @@ export const Controls = ({
   addSlideAfter,
   pasteSlideBefore,
   pasteSlideAfter,
+  isClipboardHasItems,
 }: ControlsProps) => {
   return (
     <div class="controls">
@@ -26,11 +28,13 @@ export const Controls = ({
       <button onClick={cutSlide}>Cut</button>
       <button onClick={removeSlide}>Remove</button>
       <AddSlide
+        isClipboardHasItems={isClipboardHasItems}
         addSlide={addSlideBefore}
         pasteSlide={pasteSlideBefore}
         name="Add Before"
       />
       <AddSlide
+        isClipboardHasItems={isClipboardHasItems}
         addSlide={addSlideAfter}
         pasteSlide={pasteSlideAfter}
         name="Add After"

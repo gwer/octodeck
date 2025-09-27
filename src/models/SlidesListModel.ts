@@ -236,9 +236,7 @@ export class SlidesListModel {
     return this.#slides;
   }
 
-  // #updateSlidesClipboardStatus() {
-  //   this.slides.forEach((slide) => {
-  //     slide.isClipboardHasItems = this.#clipboard.length > 0;
-  //   });
-  // }
+  get clipboardLength() {
+    return this.#clipboard.value.length;
+  }
 }

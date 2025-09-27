@@ -13,6 +13,7 @@ type SlideModel = SlideBaseModel | SlideCommonModel | SlideShoutModel;
 
 type SlideProps = {
   slide: SlideModel;
+  isClipboardHasItems: boolean;
   isEditable?: boolean;
   cloneSlide: () => void;
   cutSlide: () => void;
@@ -43,6 +44,7 @@ const getSlideContent = ({
 
 export const Slide: FunctionComponent<SlideProps> = ({
   slide,
+  isClipboardHasItems,
   isEditable = false,
   cloneSlide,
   cutSlide,
@@ -56,6 +58,7 @@ export const Slide: FunctionComponent<SlideProps> = ({
     <div className="slide">
       {isEditable ? (
         <Controls
+          isClipboardHasItems={isClipboardHasItems}
           cloneSlide={cloneSlide}
           cutSlide={cutSlide}
           removeSlide={removeSlide}
