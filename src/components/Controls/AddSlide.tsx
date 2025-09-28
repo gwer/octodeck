@@ -1,5 +1,6 @@
 import type { JSX } from 'preact/jsx-runtime';
 import type { SlideType } from '../../models/SlidesListModel';
+import styles from './Controls.module.css';
 
 type AddSlideProps = {
   name: string;
@@ -35,7 +36,7 @@ export const AddSlide = ({
   };
 
   return (
-    <select onChange={handleAddSlide}>
+    <select class={styles.select} onChange={handleAddSlide}>
       <option value="" style={{ color: '#666', fontWeight: 'bold' }}>
         {name}
       </option>

@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'preact';
 import { useRef } from 'preact/hooks';
 import type { SlideBaseModel } from '../../models/SlideBaseModel';
+import styles from './SlideBase.module.css';
 
 type SlideBaseProps = {
   slide: SlideBaseModel;
@@ -18,7 +19,7 @@ export const SlideBase: FunctionComponent<SlideBaseProps> = ({
   return (
     <div
       ref={ref}
-      class={`slideContent ${isShout ? 'slideContent_shout' : ''}`}
+      class={isShout ? styles.slideContent_shout : styles.slideContent}
       dangerouslySetInnerHTML={{ __html: slide.slideContent }}
       contentEditable={isEditable ? 'true' : 'false'}
       onFocusIn={() => {

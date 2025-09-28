@@ -7,7 +7,7 @@
   justify-content: flex-end;
 }
 
-& select {
+.button {
   padding: 0.5em 1em;
   border-radius: 4px;
   box-sizing: border-box;
@@ -16,16 +16,20 @@
   color: #000;
   border: 1px solid #999;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  &:active {
+    background-color: #ccc;
+  }
 }
 
-& select:hover {
-  background-color: #ddd;
-}
+.select {
+  composes: button;
 
-& select:active {
-  background-color: #ccc;
-}
-
-& option {
-  background-color: #fff;
+  & option {
+    background-color: #fff;
+  }
 }

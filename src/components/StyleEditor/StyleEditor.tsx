@@ -1,12 +1,12 @@
 import type { SlidesListModel, Styles } from '../../models/SlidesListModel';
-import './StyleEditor.css';
+import styles from './StyleEditor.module.css';
 
 export type StyleEditorProps = {
   slidesList: SlidesListModel;
 };
 
 export const StyleEditor = ({ slidesList }: StyleEditorProps) => {
-  const styles = slidesList.stylesView;
+  const stylesView = slidesList.stylesView;
   const onInput = (styles: Styles) => {
     slidesList.stylesView = styles;
   };
@@ -20,7 +20,7 @@ export const StyleEditor = ({ slidesList }: StyleEditorProps) => {
       const name = target.name;
       const value = target.value;
 
-      handler({ ...styles, [name]: value });
+      handler({ ...stylesView, [name]: value });
     };
   };
 
@@ -30,42 +30,42 @@ export const StyleEditor = ({ slidesList }: StyleEditorProps) => {
   };
 
   return (
-    <div class="styleEditor">
-      <label>
+    <div class={styles.wrapper}>
+      <label class={styles.label}>
         <span>Background Color:</span>
         <input
           name="bgColor"
           type="color"
-          value={styles.bgColor}
+          value={stylesView.bgColor}
           {...handlers}
         />
       </label>
-      <label>
+      <label class={styles.label}>
         <span>Heading Color:</span>
         <input
           name="headingColor"
           type="color"
-          value={styles.headingColor}
+          value={stylesView.headingColor}
           {...handlers}
         />
       </label>
-      <label>
+      <label class={styles.label}>
         <span>Font Color:</span>
         <input
           name="fontColor"
           type="color"
-          value={styles.fontColor}
+          value={stylesView.fontColor}
           {...handlers}
         />
       </label>
-      <label>
+      <label class={styles.label}>
         <span>Font Size:</span>
         <input
           name="fontSize"
           type="number"
           min="10"
           max="200"
-          value={styles.fontSize}
+          value={stylesView.fontSize}
           {...handlers}
         />
       </label>

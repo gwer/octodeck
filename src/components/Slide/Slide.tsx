@@ -7,7 +7,7 @@ import { Controls } from '../Controls';
 import { SlideBase } from '../SlideBase';
 import { SlideCommon } from '../SlideCommon';
 import { SlideShout } from '../SlideShout';
-import './Slide.css';
+import styles from './Slide.module.css';
 
 type SlideModel = SlideBaseModel | SlideCommonModel | SlideShoutModel;
 
@@ -55,7 +55,7 @@ export const Slide: FunctionComponent<SlideProps> = ({
   pasteSlideAfter,
 }) => {
   return (
-    <div className="slide">
+    <div class={styles.slide}>
       {isEditable ? (
         <Controls
           isClipboardHasItems={isClipboardHasItems}

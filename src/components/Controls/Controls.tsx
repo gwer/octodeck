@@ -1,6 +1,6 @@
 import type { SlideType } from '../../models/SlidesListModel';
-import './Controls.css';
 import { AddSlide } from './AddSlide';
+import styles from './Controls.module.css';
 
 export type ControlsProps = {
   cloneSlide: () => void;
@@ -23,10 +23,16 @@ export const Controls = ({
   isClipboardHasItems,
 }: ControlsProps) => {
   return (
-    <div class="controls">
-      <button onClick={cloneSlide}>Clone</button>
-      <button onClick={cutSlide}>Cut</button>
-      <button onClick={removeSlide}>Remove</button>
+    <div class={styles.controls}>
+      <button class={styles.button} onClick={cloneSlide}>
+        Clone
+      </button>
+      <button class={styles.button} onClick={cutSlide}>
+        Cut
+      </button>
+      <button class={styles.button} onClick={removeSlide}>
+        Remove
+      </button>
       <AddSlide
         isClipboardHasItems={isClipboardHasItems}
         addSlide={addSlideBefore}

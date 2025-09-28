@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'preact';
 import { useRef } from 'preact/hooks';
 import type { SlideCommonModel } from '../../models/SlideCommonModel';
+import styles from './SlideCommon.module.css';
 
 type SlideCommonProps = {
   slide: SlideCommonModel;
@@ -18,7 +19,6 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
     <>
       <h1
         ref={headingRef}
-        class="slide_heading"
         contenteditable={isEditable ? 'plaintext-only' : 'false'}
         onFocusOut={() => {
           if (!headingRef.current) {
@@ -32,7 +32,7 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
       </h1>
       <section
         ref={contentRef}
-        class="slideContent"
+        class={styles.slideContent}
         dangerouslySetInnerHTML={{ __html: slide.slideContent }}
         contentEditable={isEditable ? 'true' : 'false'}
         onFocusIn={() => {

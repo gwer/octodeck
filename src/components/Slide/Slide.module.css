@@ -59,20 +59,3 @@
     padding: 0.5em;
   }
 }
-
-.slideContent {
-  &[contenteditable='true']:not(:focus) {
-    cursor: pointer;
-  }
-}
-
-.slideContent_shout {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  color: var(--s-heading-color);
-  font-size: 3em;
-  font-weight: bold;
-}
