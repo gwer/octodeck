@@ -1,6 +1,5 @@
 import { computed, type Signal } from '@preact/signals';
 
-// ?????
 export const parseSlide = (rawData: string) => {
   if (rawData.trim().startsWith('---')) {
     const splitted = rawData.split('---');
