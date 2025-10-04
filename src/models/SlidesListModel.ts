@@ -1,4 +1,4 @@
-import { Signal, signal } from '@preact/signals';
+import { batch, Signal, signal } from '@preact/signals';
 import {
   frontMatterParse,
   frontMatterToRawData,
@@ -169,7 +169,15 @@ export class SlidesListModel {
   }
 
   removeSlide(target: SlideBaseModel) {
-    this.#slides.value = this.#slides.value.filter((slide) => slide !== target);
+    batch(() => {
+      this.#slides.value = this.#slides.value.filter(
+        (slide) => slide !== target,
+      );
+
+      if (this.#slides.value.length === 0) {
+        this.#slides.value = [this.createNewSlideByType('common')];
+      }
+    });
   }
 
   cutSlide(target: SlideBaseModel) {
