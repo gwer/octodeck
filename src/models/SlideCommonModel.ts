@@ -4,7 +4,6 @@ import { SlideBaseModel } from './SlideBaseModel';
 
 type SlideCommonModelProps = {
   rawData: Signal<string>;
-  // onChange: (value: string) => void;
 };
 
 export class SlideCommonModel extends SlideBaseModel {
@@ -52,19 +51,6 @@ export class SlideCommonModel extends SlideBaseModel {
   override get content(): string {
     return this.#content.value;
   }
-
-  // override set rawContent(value: string) {
-  //   if (value.startsWith('# ')) {
-  //     this.#heading = value.split('\n')[0]?.slice(2) || '';
-  //     this.#content = value.split('\n').slice(1).join('\n') || '';
-  //   } else {
-  //     this.#content = value || '';
-  //   }
-  // }
-
-  // override get rawContent() {
-  //   return `# ${this.#heading.value}\n${this.#content.value}`;
-  // }
 
   override get slideContent() {
     return parseMarkdown(this.#content.value);

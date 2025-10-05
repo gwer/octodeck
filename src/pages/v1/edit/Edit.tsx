@@ -1,4 +1,3 @@
-// import { OctodeckModes } from '../../../components/OctodeckModes';
 import { render } from 'preact';
 import { Octostore } from '../../../lib/octostore';
 import { SlidesListModel } from '../../../models/SlidesListModel';
@@ -25,9 +24,6 @@ render(
   </>,
   app,
 );
-
-// const modes = new OctodeckModes({ currentMode: 'edit' });
-// app.appendChild(modes);
 
 /**
  * Syncronization between the model and the store

@@ -11,7 +11,6 @@ import { uniqueId } from '../lib/uniqueId';
 
 type SlideBaseModelProps = {
   rawData: Signal<string>;
-  // onChange: (value: string) => void;
 };
 
 export class SlideBaseModel {
@@ -19,7 +18,6 @@ export class SlideBaseModel {
   protected _frontMatterRaw!: ReadonlySignal<string>;
   protected _frontMatter!: ReadonlySignal<Record<string, string>>;
   protected _rawContent!: ReadonlySignal<string>;
-  // protected _onChange: (value: string) => void;
   public id!: string;
 
   constructor({ rawData }: SlideBaseModelProps) {
@@ -28,7 +26,6 @@ export class SlideBaseModel {
     this._frontMatterRaw = getComputedFrontMatterRaw(rawData);
     this._frontMatter = getComputedFrontMatter(rawData);
     this._rawContent = getComputedRawContent(rawData);
-    // this._onChange = onChange;
   }
 
   static getNewRawData() {
@@ -37,7 +34,6 @@ export class SlideBaseModel {
 
   set rawData(value: string) {
     this._rawData.value = value;
-    // this._onChange(this.rawData);
   }
 
   get rawData() {

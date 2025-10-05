@@ -2,7 +2,6 @@ import type { SlidesListModel } from '../../models/SlidesListModel';
 
 type DeckEditorProps = {
   slides: SlidesListModel;
-  // onChange: (value: string) => void;
 };
 
 export const DeckEditor = ({ slides }: DeckEditorProps) => {

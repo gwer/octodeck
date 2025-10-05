@@ -3,7 +3,6 @@ import { SlideBaseModel } from './SlideBaseModel';
 
 type SlideShoutModelProps = {
   rawData: Signal<string>;
-  // onChange: (value: string) => void;
 };
 
 export class SlideShoutModel extends SlideBaseModel {
