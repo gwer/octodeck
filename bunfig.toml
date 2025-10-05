@@ -1,0 +1,2 @@
+[serve.static]
+plugins = ["./tools/lightningcss.ts"]

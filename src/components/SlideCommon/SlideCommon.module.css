@@ -1,0 +1,5 @@
+.slideContent {
+  &[contenteditable='true']:not(:focus) {
+    cursor: pointer;
+  }
+}

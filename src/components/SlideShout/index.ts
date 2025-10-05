@@ -1,0 +1,1 @@
+export { SlideShout } from './SlideShout';
