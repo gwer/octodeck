@@ -1,6 +1,8 @@
 import { toByteArray, fromByteArray } from '../../vendor/base64-js';
 
 export class Octostore {
+  private static readonly SEPARATOR = '#';
+
   private static async compressString(str: string): Promise<string> {
     const encoder = new TextEncoder();
     const data = encoder.encode(str);
@@ -35,27 +37,61 @@ export class Octostore {
     return decoder.decode(decompressed);
   }
 
-  static async setData(data: string): Promise<void> {
+  static async setData(data: string[]): Promise<void> {
     try {
-      const compressed = await this.compressString(data);
-      window.location.hash = compressed;
+      const compressed = await Promise.all(data.map(this.compressString));
+      window.location.hash = compressed.join(this.SEPARATOR);
     } catch (error) {
       throw new Error(`Failed to set data: ${error}`);
     }
   }
 
-  static async getData(): Promise<string | null> {
+  static async setItem(index: number, data: string): Promise<void> {
+    try {
+      const hash = window.location.hash.slice(1);
+      if (!hash) {
+        return;
+      }
+
+      const values = hash.split(this.SEPARATOR);
+      values[index] = await this.compressString(data);
+      window.location.hash = values.join(this.SEPARATOR);
+    } catch (error) {
+      throw new Error(`Failed to set data: ${error}`);
+    }
+  }
+
+  static async getData(): Promise<string[] | null> {
     try {
       const hash = window.location.hash.slice(1);
       if (!hash) {
         return null;
       }
 
-      return await this.decompressString(hash);
+      const values = hash.split(this.SEPARATOR);
+
+      return await Promise.all(
+        values.map((value) => {
+          if (!value) {
+            return '';
+          }
+
+          return this.decompressString(value);
+        }),
+      );
     } catch (error) {
       console.warn('Failed to decompress data from URL:', error);
       return null;
     }
+  }
+
+  static async getItem(index: number): Promise<string | null> {
+    const data = await this.getData();
+    if (!data) {
+      return null;
+    }
+
+    return data[index] ?? null;
   }
 
   static clearData(): void {

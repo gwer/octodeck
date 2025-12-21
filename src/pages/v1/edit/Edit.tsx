@@ -1,5 +1,5 @@
 import { render } from 'preact';
-import { Octostore } from '../../../lib/octostore';
+import { Deckstore } from '../../../lib/deckstore';
 import { SlidesListModel } from '../../../models/SlidesListModel';
 import { DeckEditor } from '../../../components/DeckEditor/DeckEditor';
 import { SlidesList } from '../../../components/SlidesList';
@@ -8,7 +8,7 @@ import { Styles } from '../../../components/Styles';
 import { effect } from '@preact/signals';
 
 const isEditorEnabled = false;
-const initialData = await Octostore.getData();
+const initialData = await Deckstore.getDeck();
 const slidesList = new SlidesListModel({
   rawData: initialData || '',
 });
@@ -38,11 +38,11 @@ effect(() => {
       return;
     }
 
-    if ((await Octostore.getData()) === data) {
+    if ((await Deckstore.getDeck()) === data) {
       return;
     }
 
-    Octostore.setData(data);
+    Deckstore.setDeck(data);
   };
 
   // It's important to read the signal in the synchronous part of the effect
@@ -51,7 +51,7 @@ effect(() => {
 });
 
 window.addEventListener('hashchange', async () => {
-  const data = await Octostore.getData();
+  const data = await Deckstore.getDeck();
 
   if (data && data !== slidesList.rawData) {
     isSyncInProgress = true;

@@ -1,10 +1,10 @@
 import { render } from 'preact';
-import { Octostore } from '../../../lib/octostore';
+import { Deckstore } from '../../../lib/deckstore';
 import { SlidesListModel } from '../../../models/SlidesListModel';
 import { SlidesList } from '../../../components/SlidesList';
 import { Styles } from '../../../components/Styles';
 
-const initialData = await Octostore.getData();
+const initialData = await Deckstore.getDeck();
 const slidesList = new SlidesListModel({
   rawData: initialData || '',
 });
