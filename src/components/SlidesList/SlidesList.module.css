@@ -4,7 +4,7 @@
     auto-fill,
     calc(var(--s-width) * var(--s-scale))
   );
-  grid-template-rows: repeat(auto-fill, calc(var(--s-height) * var(--s-scale)));
+  grid-auto-rows: calc(var(--s-height) * var(--s-scale));
   gap: calc(2em * var(--s-scale));
   padding: 1em;
   overflow: auto;
