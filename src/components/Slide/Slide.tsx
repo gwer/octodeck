@@ -15,6 +15,8 @@ type SlideProps = {
   slide: SlideModel;
   isClipboardHasItems: boolean;
   isEditable?: boolean;
+  isActive?: boolean;
+  onClick?: () => void;
   cloneSlide: () => void;
   cutSlide: () => void;
   removeSlide: () => void;
@@ -46,6 +48,8 @@ export const Slide: FunctionComponent<SlideProps> = ({
   slide,
   isClipboardHasItems,
   isEditable = false,
+  isActive = false,
+  onClick,
   cloneSlide,
   cutSlide,
   removeSlide,
@@ -55,23 +59,34 @@ export const Slide: FunctionComponent<SlideProps> = ({
   pasteSlideAfter,
 }) => {
   return (
-    <div class={styles.slide}>
-      {isEditable ? (
-        <Controls
-          isClipboardHasItems={isClipboardHasItems}
-          cloneSlide={cloneSlide}
-          cutSlide={cutSlide}
-          removeSlide={removeSlide}
-          addSlideBefore={addSlideBefore}
-          addSlideAfter={addSlideAfter}
-          pasteSlideBefore={pasteSlideBefore}
-          pasteSlideAfter={pasteSlideAfter}
-        />
-      ) : null}
-      {getSlideContent({
-        slide,
-        isEditable,
-      })}
+    <div class={isActive ? styles.wrapper_active : styles.wrapper}>
+      <div
+        class={[
+          styles.slide,
+          isActive && styles.active,
+          !!onClick && styles.clickable,
+        ]
+          .filter(Boolean)
+          .join(' ')}
+        onClick={onClick}
+      >
+        {isEditable ? (
+          <Controls
+            isClipboardHasItems={isClipboardHasItems}
+            cloneSlide={cloneSlide}
+            cutSlide={cutSlide}
+            removeSlide={removeSlide}
+            addSlideBefore={addSlideBefore}
+            addSlideAfter={addSlideAfter}
+            pasteSlideBefore={pasteSlideBefore}
+            pasteSlideAfter={pasteSlideAfter}
+          />
+        ) : null}
+        {getSlideContent({
+          slide,
+          isEditable,
+        })}
+      </div>
     </div>
   );
 };

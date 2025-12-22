@@ -1,3 +1,18 @@
+.wrapper {
+  display: contents;
+}
+
+.wrapper_active {
+  background-color: #000000;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2;
+}
+
 .slide {
   width: var(--s-width, 1024px);
   height: var(--s-height, calc(1024px / (16 / 9)));
@@ -58,4 +73,22 @@
     border: 1px solid var(--s-font-color);
     padding: 0.5em;
   }
+}
+
+.clickable:not(.active) {
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 16px 2px #000000;
+    transition: box-shadow 0.2s ease-in-out;
+    z-index: 1;
+  }
+}
+
+.active {
+  flex-shrink: 0;
+  transform: scale(
+    min((calc(100vw / 1024px)), (calc(100vh / (1024px / (16 / 9)))))
+  );
+  transform-origin: center;
 }
