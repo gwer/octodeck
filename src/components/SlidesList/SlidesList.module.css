@@ -6,6 +6,6 @@
   );
   grid-auto-rows: calc(var(--s-height) * var(--s-scale));
   gap: calc(2em * var(--s-scale));
-  padding: 1em;
+  padding: 1rem;
   overflow: auto;
 }
