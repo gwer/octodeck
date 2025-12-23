@@ -75,12 +75,13 @@
   }
 }
 
-.clickable:not(.active) {
+.clickable {
   cursor: pointer;
+  transition: outline 0.2s ease-in-out;
+  outline: 0px solid transparent;
 
-  &:hover {
-    box-shadow: 0 0 16px 2px #000000;
-    transition: box-shadow 0.2s ease-in-out;
+  &:not(.active):hover {
+    outline: 12px solid #fff3;
     z-index: 1;
   }
 }
