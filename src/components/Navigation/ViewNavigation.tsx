@@ -1,7 +1,10 @@
+import { useSyncExternalStore } from 'preact/compat';
 import { Navigation } from './Navigation';
+import { hashSubscribe } from './hashStore';
 
 export const ViewNavigation = () => {
-  const editUrl = `/v1/edit${window.location.hash}`;
+  const hash = useSyncExternalStore(hashSubscribe, () => window.location.hash);
+  const editUrl = `/v1/edit${hash}`;
 
   return (
     <Navigation>
