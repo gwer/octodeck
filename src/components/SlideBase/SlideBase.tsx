@@ -27,11 +27,19 @@ export const SlideBase: FunctionComponent<SlideBaseProps> = ({
           return;
         }
 
+        if (!isEditable) {
+          return;
+        }
+
         ref.current.innerHTML = slide.rawContent.value;
         ref.current.setAttribute('contenteditable', 'plaintext-only');
       }}
       onFocusOut={() => {
         if (!ref.current) {
+          return;
+        }
+
+        if (!isEditable) {
           return;
         }
 

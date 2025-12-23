@@ -25,6 +25,10 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
             return;
           }
 
+          if (!isEditable) {
+            return;
+          }
+
           slide.heading = headingRef.current.innerHTML;
         }}
       >
@@ -40,11 +44,19 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
             return;
           }
 
+          if (!isEditable) {
+            return;
+          }
+
           contentRef.current.innerHTML = slide.content;
           contentRef.current.setAttribute('contenteditable', 'plaintext-only');
         }}
         onFocusOut={() => {
           if (!contentRef.current) {
+            return;
+          }
+
+          if (!isEditable) {
             return;
           }
 
