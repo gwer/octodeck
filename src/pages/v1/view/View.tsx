@@ -3,6 +3,7 @@ import { Deckstore } from '../../../lib/deckstore';
 import { SlidesListModel } from '../../../models/SlidesListModel';
 import { SlidesList } from '../../../components/SlidesList';
 import { Styles } from '../../../components/Styles';
+import { ViewNavigation } from '../../../components/Navigation';
 import { effect, signal } from '@preact/signals';
 
 const initialData = await Deckstore.getDeck();
@@ -38,6 +39,7 @@ render(
       slideIndex={slideIndex}
       isEditable={false}
     />
+    <ViewNavigation />
   </>,
   app,
 );

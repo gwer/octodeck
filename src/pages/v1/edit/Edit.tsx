@@ -5,6 +5,7 @@ import { DeckEditor } from '../../../components/DeckEditor/DeckEditor';
 import { SlidesList } from '../../../components/SlidesList';
 import { StyleEditor } from '../../../components/StyleEditor';
 import { Styles } from '../../../components/Styles';
+import { EditNavigation } from '../../../components/Navigation';
 import { effect } from '@preact/signals';
 
 const isEditorEnabled = false;
@@ -21,6 +22,7 @@ render(
     <StyleEditor slidesList={slidesList} />
     {isEditorEnabled && <DeckEditor slides={slidesList} />}
     <SlidesList slidesList={slidesList} isEditable={true} />
+    <EditNavigation />
   </>,
   app,
 );

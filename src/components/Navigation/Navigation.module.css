@@ -1,0 +1,13 @@
+.wrapper {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1;
+  background-color: #fffd;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
