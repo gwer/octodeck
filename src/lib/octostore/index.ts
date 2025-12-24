@@ -49,11 +49,8 @@ export class Octostore {
   static async setItem(index: number, data: string): Promise<void> {
     try {
       const hash = window.location.hash.slice(1);
-      if (!hash) {
-        return;
-      }
+      const values = hash ? hash.split(this.SEPARATOR) : [];
 
-      const values = hash.split(this.SEPARATOR);
       values[index] = await this.compressString(data);
       window.location.hash = values.join(this.SEPARATOR);
     } catch (error) {
