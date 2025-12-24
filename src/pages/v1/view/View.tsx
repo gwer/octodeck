@@ -58,6 +58,11 @@ effect(() => {
 
 document.addEventListener('keydown', (event) => {
   if (slideIndex.value === null) {
+    if (event.key === 'Enter') {
+      slideIndex.value = 0;
+      event.preventDefault();
+    }
+
     return;
   }
 
