@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OctoDeck - Presentations in URLs</title>
+    <meta
+      name="description"
+      content="Create and share presentations instantly with magic links. No files, no servers, just pure URL magic with markdown support."
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Courier New', Courier, monospace;
+        line-height: 1.6;
+        color: #000;
+        background: #fff;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      header {
+        border-bottom: 1px solid #000;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        font-weight: normal;
+        margin-bottom: 0.5rem;
+      }
+
+      nav {
+        margin-top: 1rem;
+        display: flex;
+        gap: 2rem;
+      }
+
+      nav a {
+        color: #000;
+        text-decoration: underline;
+      }
+
+      nav a:hover {
+        text-decoration: none;
+      }
+
+      main {
+        margin-bottom: 3rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+        font-weight: normal;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #000;
+        padding-bottom: 0.5rem;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      code {
+        background: #f0f0f0;
+        padding: 0.2em 0.4em;
+        font-family: 'Courier New', Courier, monospace;
+      }
+
+      pre {
+        background: #f0f0f0;
+        padding: 1rem;
+        overflow-x: auto;
+        margin-bottom: 1rem;
+        border: 1px solid #000;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+      li:before {
+        content: '- ';
+      }
+
+      a {
+        color: #000;
+        text-decoration: underline;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      .links {
+        margin-top: 2rem;
+      }
+
+      .links a {
+        display: inline-block;
+        margin-right: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      footer {
+        border-top: 1px solid #000;
+        padding-top: 1rem;
+        margin-top: 3rem;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+      }
+    </style>
+  <script type="module" crossorigin src="./chunk-taey88dt.js"></script></head>
+  <body>
+    <header>
+      <h1>OctoDeck</h1>
+      <nav>
+        <a href="/v1/edit">Create a new deck</a>
+        <a
+          href="/v1/view#hY/RbtowFIbv/RT/2hsIMktbtRdIuaCEbZkoQcA2VVUlnORALIyNbEfZpohnn0JQ17teWPb5/k/n+ERRxLLdxChjR7jebrf3FLKSRCH1Gw1vw/Dhhm2N9m8oDB/u7s5oJf/SCLf3LIoixjln/s+RRnClqfy5vkaaexNTvmeDweB8/mu5ORyMvniPwskcW2MPwnupd+x75TxqKz3BKVmQQy19iSB4EnZfmFoHwYhxBMGjUUUQoIdNEGzQb1nihZJ5xzp0qnRBVklNp5aeLvTkvJV7gi+tqXblqQsv6ctM6r177X3ut/RFiYzUay8m56UWXhrdb70P9ppJ5x27GeLZVMiFRuUIqoXdPlmlFHVGaguyVFzSjHZSd46uDhlZx8CRlqhN3b4Sj9rYvWMAx8qbI6RnaIuFIuHofUexE1J/+uira5EpcqzhWJfSgTccl0uAN6yBk4ejIjTwrYkG9Ft05KPWE1MQ22w2LImn83XyJZmM10k6R5z8TFZJOh+yxTL9uhw/8SQe4hspZXhtrCrOwWQa/1hO38kAECerxWz8jKuzjV+tfTUE0M75Bw=="
+          >View demo</a
+        >
+        <a href="https://github.com/gwer/octodeck">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <p>
+        Presentations stored in URLs. No files, no servers, no accounts. Just
+        markdown in a hash.
+      </p>
+
+      <h2>How it works</h2>
+      <p>
+        Write slides in markdown. The entire deck gets compressed and encoded
+        into the URL hash. Share the URL — share the presentation.
+      </p>
+
+      <h2>Features</h2>
+      <ul>
+        <li>Markdown syntax for slides</li>
+        <li>Live editing with instant preview</li>
+        <li>Customizable styles</li>
+        <li>Undo/redo via native browser history</li>
+        <li>No backend, no database, no tracking</li>
+        <li>Open source (MIT)</li>
+      </ul>
+
+      <h2>Usage</h2>
+      <p>
+        <a href="/v1/edit">Create a new deck</a> or
+        <a
+          href="/v1/view#hY/RbtowFIbv/RT/2hsIMktbtRdIuaCEbZkoQcA2VVUlnORALIyNbEfZpohnn0JQ17teWPb5/k/n+ERRxLLdxChjR7jebrf3FLKSRCH1Gw1vw/Dhhm2N9m8oDB/u7s5oJf/SCLf3LIoixjln/s+RRnClqfy5vkaaexNTvmeDweB8/mu5ORyMvniPwskcW2MPwnupd+x75TxqKz3BKVmQQy19iSB4EnZfmFoHwYhxBMGjUUUQoIdNEGzQb1nihZJ5xzp0qnRBVklNp5aeLvTkvJV7gi+tqXblqQsv6ctM6r177X3ut/RFiYzUay8m56UWXhrdb70P9ppJ5x27GeLZVMiFRuUIqoXdPlmlFHVGaguyVFzSjHZSd46uDhlZx8CRlqhN3b4Sj9rYvWMAx8qbI6RnaIuFIuHofUexE1J/+uira5EpcqzhWJfSgTccl0uAN6yBk4ejIjTwrYkG9Ft05KPWE1MQ22w2LImn83XyJZmM10k6R5z8TFZJOh+yxTL9uhw/8SQe4hspZXhtrCrOwWQa/1hO38kAECerxWz8jKuzjV+tfTUE0M75Bw=="
+          >view demo</a
+        >.
+      </p>
+
+      <h2>View mode controls</h2>
+      <ul>
+        <li><code>Enter</code> - start presentation</li>
+        <li><code>Esc</code> - exit presentation</li>
+        <li><code>Arrow keys</code> - navigate slides</li>
+        <li><code>Space</code> - next slide</li>
+      </ul>
+
+      <h2>Tech</h2>
+      <p>
+        Built with <code>Preact</code> and <code>Bun</code>. Source code on
+        <a href="https://github.com/gwer/octodeck">GitHub</a>.
+      </p>
+      <p>Analytics by <code>GoatCounter</code>.</p>
+    </main>
+
+    <footer>
+      <p>MIT License. No warranty. Use at your own risk.</p>
+    </footer>
+
+    <script
+      data-goatcounter="https://octodeck.goatcounter.com/count"
+      async
+      src="https://gc.zgo.at/count.js"
+    ></script>
+  </body>
+</html>
