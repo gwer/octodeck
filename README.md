@@ -1,5 +1,11 @@
 # OctoDeck
 
+Presentations stored in URLs. No files, no servers, no accounts. Just markdown in a hash.
+
+https://gwer.github.io/octodeck/
+
+## Usage
+
 To install dependencies:
 
 ```bash
@@ -11,5 +17,3 @@ To run:
 ```bash
 bun dev
 ```
-
-This project was created using `bun init` in bun v1.2.19. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
