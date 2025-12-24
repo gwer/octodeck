@@ -10,7 +10,19 @@
         --s-height: calc(var(--s-width) / (16 / 9));
         --s-line-height: 2;
 
-        --s-scale: min(1, calc((100vw - 3rem) / 1024px));
+        --s-scale: 0.25;
+
+        @media (min-width: 550px) {
+          --s-scale: 0.5;
+        }
+
+        @media (min-width: 1152px) {
+          --s-scale: 1;
+        }
+
+        @supports (transform: scale(min(1, calc((100vw - 3rem) / 1024px)))) {
+          --s-scale: min(1, calc((100vw - 3rem) / 1024px));
+        }
 
         margin: 0;
         padding: 0;
