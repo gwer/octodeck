@@ -79,11 +79,12 @@ body:has(.wrapper_active) {
 }
 
 .clickable {
-  cursor: pointer;
   transition: outline 0.2s ease-in-out;
   outline: 0px solid transparent;
+  will-change: transform; /* to prevent outline rendering artifacts */
 
   &:not(.active):hover {
+    cursor: pointer;
     outline: 12px solid #fff3;
     z-index: 1;
   }
