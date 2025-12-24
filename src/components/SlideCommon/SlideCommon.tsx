@@ -1,5 +1,6 @@
 import type { FunctionComponent } from 'preact';
-import { useRef } from 'preact/hooks';
+import { useEffect, useRef } from 'preact/hooks';
+import { useSignal } from '@preact/signals';
 import type { SlideCommonModel } from '../../models/SlideCommonModel';
 import styles from './SlideCommon.module.css';
 
@@ -13,7 +14,44 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
   isEditable = false,
 }) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const isEditing = useSignal(false);
+  const draft = useSignal(slide.content);
+
+  const startEdit = () => {
+    if (!isEditable) {
+      return;
+    }
+
+    isEditing.value = true;
+    draft.value = slide.content;
+  };
+
+  const commitEdit = () => {
+    if (!isEditable) {
+      return;
+    }
+
+    if (!document.hasFocus()) return;
+
+    isEditing.value = false;
+    slide.content = draft.value;
+  };
+
+  useEffect(() => {
+    if (!isEditing.value) {
+      return;
+    }
+
+    const textarea = contentRef.current;
+    if (!textarea) {
+      return;
+    }
+
+    textarea.focus();
+    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+  }, [isEditing.value]);
 
   return (
     <>
@@ -34,37 +72,35 @@ export const SlideCommon: FunctionComponent<SlideCommonProps> = ({
       >
         {slide.heading}
       </h1>
-      <section
-        ref={contentRef}
-        class={styles.slideContent}
-        dangerouslySetInnerHTML={{ __html: slide.slideContent }}
-        contentEditable={isEditable ? 'true' : 'false'}
-        onFocusIn={() => {
-          if (!contentRef.current) {
-            return;
-          }
 
-          if (!isEditable) {
-            return;
-          }
+      {isEditing.value ? (
+        <textarea
+          ref={contentRef}
+          value={draft.value}
+          class={styles.contentTextarea}
+          onChange={(e) => {
+            if (!(e.target instanceof HTMLTextAreaElement)) {
+              return;
+            }
 
-          contentRef.current.innerHTML = slide.content;
-          contentRef.current.setAttribute('contenteditable', 'plaintext-only');
-        }}
-        onFocusOut={() => {
-          if (!contentRef.current) {
-            return;
-          }
+            draft.value = e.target.value;
+          }}
+          onBlur={commitEdit}
+        />
+      ) : (
+        <section
+          class={styles.slideContent}
+          dangerouslySetInnerHTML={{ __html: slide.slideContent }}
+          contentEditable={isEditable ? 'true' : 'false'}
+          onFocusIn={() => {
+            if (!isEditable) {
+              return;
+            }
 
-          if (!isEditable) {
-            return;
-          }
-
-          slide.content = contentRef.current.innerHTML;
-          contentRef.current.innerHTML = slide.slideContent;
-          contentRef.current.setAttribute('contenteditable', 'true');
-        }}
-      />
+            startEdit();
+          }}
+        />
+      )}
     </>
   );
 };
