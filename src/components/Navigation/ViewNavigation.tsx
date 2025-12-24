@@ -4,7 +4,7 @@ import { hashSubscribe } from './hashStore';
 
 export const ViewNavigation = () => {
   const hash = useSyncExternalStore(hashSubscribe, () => window.location.hash);
-  const editUrl = `/v1/edit${hash}`;
+  const editUrl = `./edit${hash}`;
 
   return (
     <Navigation>
