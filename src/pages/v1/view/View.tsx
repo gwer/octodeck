@@ -56,27 +56,88 @@ effect(() => {
   }
 });
 
+const prevSlide = () => {
+  if (slideIndex.value === null) {
+    return;
+  }
+
+  if (slideIndex.value <= 0) {
+    return;
+  }
+
+  slideIndex.value--;
+};
+
+const nextSlide = () => {
+  if (slideIndex.value === null) {
+    return;
+  }
+
+  if (slideIndex.value >= slidesList.slides.value.length - 1) {
+    return;
+  }
+
+  slideIndex.value++;
+};
+
+const startPresentation = () => {
+  if (slideIndex.value === null) {
+    slideIndex.value = 0;
+  }
+};
+
+const stopPresentation = () => {
+  slideIndex.value = null;
+};
+
 document.addEventListener('keydown', (event) => {
   if (slideIndex.value === null) {
     if (event.key === 'Enter') {
-      slideIndex.value = 0;
+      startPresentation();
       event.preventDefault();
     }
 
     return;
   }
 
-  if (
-    ['ArrowRight', ' '].includes(event.key) &&
-    slideIndex.value < slidesList.slides.value.length - 1
-  ) {
-    slideIndex.value++;
+  if (['ArrowRight', ' '].includes(event.key)) {
+    nextSlide();
     event.preventDefault();
-  } else if (event.key === 'ArrowLeft' && slideIndex.value > 0) {
-    slideIndex.value--;
+  } else if (event.key === 'ArrowLeft') {
+    prevSlide();
     event.preventDefault();
   } else if (event.key === 'Escape') {
-    slideIndex.value = null;
+    stopPresentation();
     event.preventDefault();
   }
 });
+
+const isTouchDevice = window.matchMedia(
+  '(hover: none) and (pointer: coarse)',
+).matches;
+
+if (isTouchDevice) {
+  document.addEventListener('click', (e) => {
+    const { width, height } = document.documentElement.getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+
+    const isTopClick = y < height / 4;
+    if (isTopClick) {
+      stopPresentation();
+      return;
+    }
+
+    const isLeftClick = x < width / 4;
+    if (isLeftClick) {
+      prevSlide();
+      return;
+    }
+
+    const isRightClick = x > width - width / 4;
+    if (isRightClick) {
+      nextSlide();
+      return;
+    }
+  });
+}
