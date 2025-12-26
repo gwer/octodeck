@@ -1,9 +1,8 @@
 import { Navigation } from './Navigation';
-import { useLocationHash } from './useLocationHash';
+import { useRelativeUrl } from './useRelativeUrl';
 
 export const ViewNavigation = () => {
-  const hash = useLocationHash();
-  const editUrl = `../edit${hash}`;
+  const editUrl = useRelativeUrl('edit');
 
   return (
     <Navigation>
