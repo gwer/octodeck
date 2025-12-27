@@ -9,7 +9,7 @@
     "build": "bun ./tools/build.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "^1.3.5"
   },
   "peerDependencies": {
     "typescript": "^5"

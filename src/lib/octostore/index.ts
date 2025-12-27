@@ -27,7 +27,7 @@ export class Octostore {
     const stream = new DecompressionStream('deflate-raw');
     const writer = stream.writable.getWriter();
 
-    writer.write(compressed);
+    writer.write(new Uint8Array(compressed));
     writer.close();
 
     const buf = await new Response(stream.readable).arrayBuffer();
