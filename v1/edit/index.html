@@ -30,7 +30,7 @@
         font-family: system-ui;
       }
     </style>
-  <script type="module" crossorigin src="../../chunk-zj5x9tm9.js"></script></head>
+  <script type="module" crossorigin src="../../chunk-7xg5j182.js"></script></head>
   <body>
     <div id="app"></div>
     
@@ -40,5 +40,15 @@
       async
       src="https://gc.zgo.at/count.js"
     ></script>
+
+    <script type="module">
+      if ('serviceWorker' in navigator) {
+        try {
+          await navigator.serviceWorker.register('../sw.js');
+        } catch (error) {
+          console.error('Service worker registration failed:', error);
+        }
+      }
+    </script>
   </body>
 </html>
