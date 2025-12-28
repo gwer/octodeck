@@ -36,5 +36,15 @@
       async
       src="https://gc.zgo.at/count.js"
     ></script>
+
+    <script type="module">
+      if ('serviceWorker' in navigator) {
+        try {
+          await navigator.serviceWorker.register('../../sw.js');
+        } catch (error) {
+          console.error('Service worker registration failed:', error);
+        }
+      }
+    </script>
   </body>
 </html>
