@@ -5,7 +5,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "bun './src/pages/**/*.html'",
+    "dev": "bun ./tools/dev-server.ts",
     "build": "bun ./tools/build.ts"
   },
   "devDependencies": {
