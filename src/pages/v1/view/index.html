@@ -25,6 +25,20 @@
         background-color: #654;
         font-family: system-ui;
       }
+
+      @media print {
+        body {
+          --s-scale: 1;
+
+          print-color-adjust: exact;
+          text-rendering: geometricprecision;
+        }
+
+        @page {
+          margin: 0;
+          size: 1024px 576px;
+        }
+      }
     </style>
   </head>
   <body>

@@ -37,6 +37,10 @@ body:has(.wrapper_active) {
     margin: 0 -1rem;
     padding: 0 1rem;
   }
+
+  @media print {
+    box-shadow: none;
+  }
 }
 
 .slide {
