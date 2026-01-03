@@ -1,7 +1,7 @@
 self.__PRECACHE_URLS = [
-  "chunk-mp7hq7w1.js",
+  "chunk-dgf372cm.js",
   "index.html",
-  "chunk-djawp48q.js",
+  "chunk-xm0acy1p.js",
   "chunk-taey88dt.js",
   "v1/view/index.html",
   "v1/edit/index.html",
