@@ -110,6 +110,7 @@ body:has(.wrapper_active) {
     --s-scale: min((calc(100vw / 1024px)), (calc(100vh / (1024px / (16 / 9)))));
   }
 
+  border-radius: 0;
   flex-shrink: 0;
   transform-origin: center;
 }
