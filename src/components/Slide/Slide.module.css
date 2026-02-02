@@ -55,6 +55,10 @@ body:has(.wrapper_active) {
     color: var(--s-heading-color);
   }
 
+  & a {
+    color: var(--s-heading-color);
+  }
+
   & ol,
   & ul {
     margin-top: 0;
